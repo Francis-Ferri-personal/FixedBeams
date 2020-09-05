@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsEmail, Length, IsOptional, IsUrl } from "class-validator";
+import { IsNotEmpty, IsEmail, Length, IsOptional, IsUrl, IsNumber, IsPositive } from "class-validator";
 
 export class UserUpdateDto {
     @IsNotEmpty()
@@ -15,19 +15,22 @@ export class UserUpdateDto {
 
     @IsNotEmpty()
     @Length(3, 30)
-    name: string;
+    firstName: string;
 
     @IsNotEmpty()
     @Length(3, 30)
     lastName: string;
 
     @IsOptional()
-    @IsNotEmpty()
     @Length(10)
-    phone: string;
+    phone?: string;
 
     @IsOptional()
-    @IsNotEmpty()
+    @IsNumber()
+    @IsPositive()
+    money?: number;
+
+    @IsOptional()
     @IsUrl()
-    srcImage: string;
+    srcImage?: string;
 }
