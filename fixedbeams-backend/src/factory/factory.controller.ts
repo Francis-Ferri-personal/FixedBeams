@@ -77,7 +77,7 @@ export class FactoryController {
                 console.log(errors);
                 throw new BadRequestException("Errors iun fields");
             } else {
-                // CReate Instance
+                // Create Instance
                 const updateFactory = new FactoryEntity();
                 updateFactory.id = factoryUpdateDto.id;
                 updateFactory.name = factoryUpdateDto.name;
