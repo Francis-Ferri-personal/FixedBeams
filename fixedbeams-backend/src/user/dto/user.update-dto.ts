@@ -1,6 +1,11 @@
-import { IsNotEmpty, IsEmail, Length, IsOptional, IsUrl, IsNumber, IsPositive } from "class-validator";
+import { IsNotEmpty, Length, IsOptional, IsUrl, IsNumber, IsPositive, Min, IsInt } from "class-validator";
 
 export class UserUpdateDto {
+    @IsNotEmpty()
+    @IsInt()
+    @Min(0)
+    id: number;
+    
     @IsOptional()
     @IsNotEmpty()
     @Length(10, 30)

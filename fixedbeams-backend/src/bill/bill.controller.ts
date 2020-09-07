@@ -3,6 +3,8 @@ import { BillService } from './bill.service';
 import { BillCreateDto } from './dto/bill.create.dto';
 import { ValidationError, validate } from 'class-validator';
 import { BillUpdateDto } from './dto/bill.update.dto';
+import { BillEntity } from './bill.entity';
+import { UserEntity } from 'src/user/user.entity';
 
 
 
@@ -34,16 +36,15 @@ export class BillController {
     async addBill(
         @Body() bodyParams
     ){
-        // Put the dateTime
-        bodyParams.dateTime = new Date();
         // Validator
         const billCreateDto = new BillCreateDto();
         // Data
         billCreateDto.paymentType = bodyParams.paymentType;
         billCreateDto.total = bodyParams.total;
-        billCreateDto.dateTime = bodyParams.dateTime;
+        billCreateDto.dateTime = new Date();
         billCreateDto.latitude = bodyParams.latitude;
         billCreateDto.longitude = bodyParams.longitude;
+        billCreateDto.user = Number(bodyParams.user)
         try {
             // Validation
             const errors: ValidationError[] = await validate(billCreateDto);
@@ -51,10 +52,22 @@ export class BillController {
                 console.log(errors);
                 throw new BadRequestException("Error in fields");
             } else {
-                const response = await this.billService.createOne(bodyParams);
+                // Create instance
+                const newBill = new BillEntity();
+                newBill.paymentType = billCreateDto.paymentType;
+                newBill.total = billCreateDto.total;
+                newBill.dateTime = billCreateDto.dateTime;
+                newBill.latitude = billCreateDto.latitude;
+                newBill.longitude = billCreateDto.longitude;
+                newBill.user = new UserEntity();
+                newBill.user.id = billCreateDto.user;
+                //Send to DB
+                const response = await this.billService.createOne(newBill);
+                // Send response
                 return response;
             }
         } catch (error) {
+            console.log(error);
             throw new BadRequestException("Bill not registered");
         }
     }
@@ -64,12 +77,10 @@ export class BillController {
         @Param() pathParams,
         @Body() bodyParams
     ){
-        // Get ID
-        const id = Number(pathParams.id);
-        bodyParams.id = id;
         // Validator
         const billUpdateDto = new BillUpdateDto();
         // Data
+        billUpdateDto.id = Number(pathParams.id);
         billUpdateDto.paymentType = bodyParams.paymentType;
         billUpdateDto.latitude = bodyParams.latitude;
         billUpdateDto.longitude = bodyParams.longitude;
@@ -79,7 +90,15 @@ export class BillController {
                 console.log(errors);
                 throw new BadRequestException("Errors in fields");
             } else {
-                const response = await this.billService.updateOne(bodyParams); 
+                // Create instance
+                const updateBill = new BillEntity();
+                updateBill.id = billUpdateDto.id;
+                updateBill.paymentType = billUpdateDto.paymentType;
+                updateBill.latitude = billUpdateDto.latitude;
+                updateBill.longitude = billUpdateDto.longitude;
+                // Sent to DB
+                const response = await this.billService.updateOne(updateBill); 
+                // Send response
                 return response;
             }
         } catch (error) {

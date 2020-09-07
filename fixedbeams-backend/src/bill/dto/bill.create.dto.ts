@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsIn, Min, IsDate, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsIn, Min, IsDate, IsNumber, isNotEmpty, IsInt } from 'class-validator';
 
 export class BillCreateDto {
     @IsNotEmpty()
@@ -21,5 +21,8 @@ export class BillCreateDto {
     @IsNumber()
     longitude: number;
     
-    //TODO: falta el usuario
+    @IsNotEmpty()
+    @IsInt()
+    @Min(0)
+    user: number;
 }

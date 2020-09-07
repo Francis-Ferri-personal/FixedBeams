@@ -31,7 +31,7 @@ export class BillEntity {
 
     @Column({
         name: "dateTime",
-        type: "datetime",
+        type: "timestamp",
         nullable: false
     })
     dateTime: Date;

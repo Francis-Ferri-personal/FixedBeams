@@ -5,6 +5,7 @@ import { UserUpdateDto } from './dto/user.update-dto';
 import { UserLoginDto } from './dto/user.login-dto';
 import { ValidationError, validate } from 'class-validator';
 import { UserService } from './user.service';
+import { UserEntity } from './user.entity';
 
 
 @Controller("user")
@@ -69,7 +70,6 @@ export class UserController {
         userCreateDto.srcImage = bodyParams.srcImage;
         if(!userCreateDto.money){
             userCreateDto.money = 0;
-            bodyParams.money = 0;
         }
         try{
             // Validation
@@ -78,7 +78,19 @@ export class UserController {
                 console.log(errors);
                 throw new BadRequestException("Validaion error");
             } else {
-                const response = await this.userService.createOne(bodyParams);
+                // Create instance
+                const newUser = new UserEntity();
+                newUser.email = userCreateDto.email;
+                newUser.password = userCreateDto.password;
+                newUser.userName = userCreateDto.userName;
+                newUser.firstName = userCreateDto.firstName;
+                newUser.lastName = userCreateDto.lastName;
+                newUser.money = userCreateDto.money;
+                newUser.phone = userCreateDto.phone;
+                newUser.srcImage = userCreateDto.srcImage;
+                //Send to DB
+                const response = await this.userService.createOne(newUser);
+                // Send response
                 let userData: AccountData = this.fillUserData(response);
                 if (headers.platform === "web"){
                     res = this.addCookies(res, userData)
@@ -99,12 +111,10 @@ export class UserController {
         @Body() bodyParams,
         @Res() res
     ){
-        // Get ID
-        const id = Number(pathParams.id);
-        bodyParams.id = id;
         // Validator
         let userUpdateDto: UserUpdateDto = new UserUpdateDto();
         // Data
+        userUpdateDto.id = Number(pathParams.id);
         userUpdateDto.password = bodyParams.password;
         userUpdateDto.firstName = bodyParams.firstName;
         userUpdateDto.lastName = bodyParams.lastName;
@@ -118,8 +128,19 @@ export class UserController {
                 console.log(errors);
                 throw new BadRequestException("Error validating");
             } else {
-                await this.userService.editOne(bodyParams);
-                const response = await this.userService.findOneID(id);
+                // Create instance
+                const updatedUser = new UserEntity();
+                updatedUser.id = userUpdateDto.id;
+                updatedUser.password = userUpdateDto.password;
+                updatedUser.firstName = userUpdateDto.firstName;
+                updatedUser.lastName = userUpdateDto.lastName;
+                updatedUser.money = userUpdateDto.money;
+                updatedUser.phone = userUpdateDto.phone;
+                updatedUser.srcImage = userUpdateDto.srcImage;
+                //Send to DB
+                await this.userService.editOne(updatedUser);
+                const response = await this.userService.findOneID(updatedUser.id);
+                // Send response
                 let userData: AccountData = this.fillUserData(response);
                 if (headers.platform === "web"){
                     res = this.addCookies(res, userData)

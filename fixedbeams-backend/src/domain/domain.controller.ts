@@ -3,6 +3,7 @@ import { DomainService } from './domain.service';
 import { DomainCreateDto } from './dto/domain.create.dto';
 import { ValidationError, validate } from 'class-validator';
 import { DomainUpdaeDto } from './dto/domain.update.dto';
+import { DomainEntity } from './domain.entity';
 
 @Controller("domain")
 export class DomainController {
@@ -34,14 +35,19 @@ export class DomainController {
         //Data
         domainCreateDto.name = bodyParams.name;
         domainCreateDto.description = bodyParams.description;
-
         try {
             // Validation
             const errors: ValidationError[] = await validate(domainCreateDto);
             if(errors.length > 0) {
                 throw new BadRequestException("Error in fields");
             } else {
-                const response = this.domainService.createOne(bodyParams);
+                // Create instance
+                const newDomain = new DomainEntity();
+                newDomain.name = domainCreateDto.name;
+                newDomain.description = domainCreateDto.description;
+                // Send to DB
+                const response = this.domainService.createOne(newDomain);
+                // Send response
                 return response;
             }
         } catch (error) {
@@ -56,12 +62,10 @@ export class DomainController {
         @Param() pathParams,
         @Body() bodyParams
     ){
-        // Get ID
-        const id = Number(pathParams.id);
-        bodyParams.id = id;
         // Validator
         const domainUpdaeDto = new DomainUpdaeDto();
         // Data
+        domainUpdaeDto.id = Number(pathParams.id);
         domainUpdaeDto.name = bodyParams.name;
         domainUpdaeDto.description = bodyParams.description;
         try {
@@ -71,7 +75,14 @@ export class DomainController {
                 console.log(errors);
                 throw new BadRequestException("Errors in fields")
             } else{
-                const response = await this.domainService.updateOne(bodyParams);
+                // Create instance
+                const updateDomain = new DomainEntity();
+                updateDomain.id = domainUpdaeDto.id;
+                updateDomain.name = domainUpdaeDto.name;
+                updateDomain.description = domainUpdaeDto.description;
+                // Send to DB
+                const response = await this.domainService.updateOne(updateDomain);
+                // Send response
                 return response;
             }
         } catch (error) {

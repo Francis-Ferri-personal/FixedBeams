@@ -14,6 +14,7 @@ export class DomainEntity {
         name: "name",
         type: "varchar",
         length: 45,
+        unique: true,
         nullable: false
     })
     name: string;

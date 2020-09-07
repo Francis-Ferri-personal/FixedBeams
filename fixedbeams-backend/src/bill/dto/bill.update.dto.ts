@@ -1,7 +1,12 @@
-import { IsNotEmpty, IsIn, IsOptional, IsNumber } from "class-validator";
+import { IsNotEmpty, IsIn, IsOptional, IsNumber, IsInt, Min } from "class-validator";
 
 
 export class BillUpdateDto{
+    @IsNotEmpty()
+    @IsInt()
+    @Min(0)
+    id: number;
+
     @IsOptional()
     @IsNotEmpty()
     @IsIn(["cash", "credit card", "wire transfer"])
