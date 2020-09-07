@@ -1,4 +1,4 @@
-import { IsNotEmpty, Length, IsOptional, IsUrl, IsNumber, IsPositive, Min, IsInt } from "class-validator";
+import { IsNotEmpty, Length, IsOptional, IsUrl, IsNumber, IsPositive, Min, IsInt, IsArray, ArrayNotEmpty } from "class-validator";
 
 export class UserUpdateDto {
     @IsNotEmpty()
@@ -33,4 +33,11 @@ export class UserUpdateDto {
     @IsOptional()
     @IsUrl()
     srcImage?: string;
+
+    @IsOptional()
+    @IsArray()
+    @ArrayNotEmpty()
+    @IsInt({each: true})
+    @Min(0, {each: true})
+    idsRol?: number[];
 }

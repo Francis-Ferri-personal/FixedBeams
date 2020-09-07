@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsEmail, Length, IsOptional, IsUrl, IsNumber, Min } from "class-validator";
+import { IsNotEmpty, IsEmail, Length, IsOptional, IsUrl, IsNumber, Min, IsArray, ArrayNotEmpty, IsInt } from "class-validator";
 
 export class UserCreateDto {
     @IsNotEmpty()
@@ -33,4 +33,10 @@ export class UserCreateDto {
     @IsUrl()
     @Length(3, 150)
     srcImage?: string;
+
+    @IsArray()
+    @ArrayNotEmpty()
+    @IsInt({each: true})
+    @Min(0, {each: true})
+    idsRol: number[];
 }

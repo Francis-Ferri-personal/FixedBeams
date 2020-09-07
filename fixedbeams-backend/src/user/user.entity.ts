@@ -1,5 +1,6 @@
-import { Entity, Index, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, Index, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import { BillEntity } from '../bill/bill.entity';
+import { RolEntity } from '../rol/rol.entity';
 
 @Index([ "firstName", "lastName"])
 @Index(["email", "userName"], {unique: true})
@@ -85,4 +86,15 @@ export class UserEntity{
         bill => bill.user
     )
     bills: BillEntity[];
+
+    @ManyToMany(
+        type => RolEntity,
+        {cascade: true}
+    )
+    @JoinTable({
+        name: "UserRol",
+        joinColumn: {name: "idUser", referencedColumnName: "id"},
+        inverseJoinColumn: {name: "idRol", referencedColumnName: "id"}
+    })
+    rols: RolEntity[];
 }

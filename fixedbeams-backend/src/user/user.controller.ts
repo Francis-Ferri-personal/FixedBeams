@@ -6,6 +6,7 @@ import { UserLoginDto } from './dto/user.login-dto';
 import { ValidationError, validate } from 'class-validator';
 import { UserService } from './user.service';
 import { UserEntity } from './user.entity';
+import { RolEntity } from '../rol/rol.entity';
 
 
 @Controller("user")
@@ -68,6 +69,7 @@ export class UserController {
         userCreateDto.money = bodyParams.money;
         userCreateDto.phone = bodyParams.phone;
         userCreateDto.srcImage = bodyParams.srcImage;
+        userCreateDto.idsRol = bodyParams.idsRol;
         if(!userCreateDto.money){
             userCreateDto.money = 0;
         }
@@ -77,7 +79,7 @@ export class UserController {
             if (errors.length > 0){
                 console.log(errors);
                 throw new BadRequestException("Validaion error");
-            } else {
+            } else {                
                 // Create instance
                 const newUser = new UserEntity();
                 newUser.email = userCreateDto.email;
@@ -88,6 +90,13 @@ export class UserController {
                 newUser.money = userCreateDto.money;
                 newUser.phone = userCreateDto.phone;
                 newUser.srcImage = userCreateDto.srcImage;
+                const rols: RolEntity[] = [];
+                userCreateDto.idsRol.forEach(idRol => {
+                    const rol = new RolEntity();
+                    rol.id = idRol;
+                    rols.push(rol);
+                })
+                newUser.rols = rols
                 //Send to DB
                 const response = await this.userService.createOne(newUser);
                 // Send response
@@ -121,6 +130,7 @@ export class UserController {
         userUpdateDto.phone = bodyParams.phone;
         userUpdateDto.money = bodyParams.money;
         userUpdateDto.srcImage = bodyParams.srcImage;
+        userUpdateDto.idsRol = bodyParams.idsRol;
         try{
             // Validation
             const errors: ValidationError[] = await validate(userUpdateDto);
@@ -137,6 +147,13 @@ export class UserController {
                 updatedUser.money = userUpdateDto.money;
                 updatedUser.phone = userUpdateDto.phone;
                 updatedUser.srcImage = userUpdateDto.srcImage;
+                const rols: RolEntity[] = [];
+                userUpdateDto.idsRol.forEach(idRol => {
+                    const rol = new RolEntity();
+                    rol.id = idRol;
+                    rols.push(rol);
+                })
+                updatedUser.rols = rols
                 //Send to DB
                 await this.userService.editOne(updatedUser);
                 const response = await this.userService.findOneID(updatedUser.id);
