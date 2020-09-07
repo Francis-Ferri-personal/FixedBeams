@@ -10,6 +10,8 @@ import { DomainModule } from './domain/domain.module';
 import { DomainEntity } from './domain/domain.entity';
 import { CategoryModule } from './category/category.module';
 import { CategoryEntity } from './category/category.entity';
+import { FactoryModule } from './factory/factory.module';
+import { FactoryEntity } from './factory/factory.entity';
 
 
 /*
@@ -24,6 +26,7 @@ const IP = "34.121.130.26";
     BillModule,
     DomainModule,
     CategoryModule,
+    FactoryModule,
     TypeOrmModule.forRoot(
       {
         name: "default",
@@ -37,7 +40,8 @@ const IP = "34.121.130.26";
           UserEntity,
           BillEntity,
           DomainEntity,
-          CategoryEntity
+          CategoryEntity,
+          FactoryEntity
         ],
         // Borrar esto para cuando ya se ponga en produccion
         synchronize: true,

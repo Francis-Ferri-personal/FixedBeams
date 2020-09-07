@@ -43,7 +43,6 @@ export class DomainController {
             const errors: ValidationError[] = await validate(domainCreateDto);
             if(errors.length > 0) {
                 console.log(errors);
-                
                 throw new BadRequestException("Error in fields");
             } else {
                 // Create instance
