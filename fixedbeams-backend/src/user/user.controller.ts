@@ -99,6 +99,7 @@ export class UserController {
         @Body() bodyParams,
         @Res() res
     ){
+        // Get ID
         const id = Number(pathParams.id);
         bodyParams.id = id;
         // Validator
@@ -115,7 +116,7 @@ export class UserController {
             const errors: ValidationError[] = await validate(userUpdateDto);
             if (errors.length > 0){
                 console.log(errors);
-                throw new BadRequestException();
+                throw new BadRequestException("Error validating");
             } else {
                 await this.userService.editOne(bodyParams);
                 const response = await this.userService.findOneID(id);
@@ -127,7 +128,7 @@ export class UserController {
             }
         } catch(error){
             console.log("Error: ", error);
-            throw new BadRequestException("Error validating");
+            throw new BadRequestException("Error updating");
         }
     }
 

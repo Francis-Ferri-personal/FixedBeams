@@ -1,7 +1,8 @@
-import { Controller, Post, HttpCode, Get, Res, Param, Headers, InternalServerErrorException, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Post, HttpCode, Get, Res, Param, Headers, InternalServerErrorException, Body, BadRequestException, Put } from '@nestjs/common';
 import { BillService } from './bill.service';
 import { BillCreateDto } from './dto/bill.create.dto';
 import { ValidationError, validate } from 'class-validator';
+import { BillUpdateDto } from './dto/bill.update.dto';
 
 
 
@@ -13,6 +14,7 @@ export class BillController {
     ){}
     
     @Get(":id")
+    @HttpCode(200)
     async findBill(
         @Param() pathParams
     ){
@@ -55,7 +57,35 @@ export class BillController {
         } catch (error) {
             throw new BadRequestException("Bill not registered");
         }
-      
+    }
+
+    @Put(":id")
+    async updateBill(
+        @Param() pathParams,
+        @Body() bodyParams
+    ){
+        // Get ID
+        const id = Number(pathParams.id);
+        bodyParams.id = id;
+        // Validator
+        const billUpdateDto = new BillUpdateDto();
+        // Data
+        billUpdateDto.paymentType = bodyParams.paymentType;
+        billUpdateDto.latitude = bodyParams.latitude;
+        billUpdateDto.longitude = bodyParams.longitude;
+        try {
+            const errors: ValidationError[] = await validate(billUpdateDto);
+            if(errors.length > 0){
+                console.log(errors);
+                throw new BadRequestException("Errors in fields");
+            } else {
+                const response = await this.billService.updateOne(bodyParams); 
+                return response;
+            }
+        } catch (error) {
+            console.log(error);
+            throw new BadRequestException("Error updating")
+        }
     }
 
 }

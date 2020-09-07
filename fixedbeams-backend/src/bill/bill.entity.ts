@@ -59,6 +59,5 @@ export class BillEntity {
         user => user.bills
     )
     user: UserEntity;
-
     
 }

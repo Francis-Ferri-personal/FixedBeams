@@ -13,9 +13,6 @@ import { BillController } from "./bill.controller";
     ],
     providers: [
         BillService
-    ],
-    exports: [
-        BillService
     ]
 })
 export class BillModule {

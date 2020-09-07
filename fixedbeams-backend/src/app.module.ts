@@ -6,6 +6,8 @@ import { TypeOrmModule} from '@nestjs/typeorm';
 import { UserEntity } from './user/user.entity';
 import { BillModule } from './bill/bill.module';
 import { BillEntity } from './bill/bill.entity';
+import { DomainModule } from './domain/domain.module';
+import { DomainEntity } from './domain/domain.entity';
 
 
 /*
@@ -18,6 +20,7 @@ const IP = "35.238.125.100";
   imports: [
     UserModule,
     BillModule,
+    DomainModule,
     TypeOrmModule.forRoot(
       {
         name: "default",
@@ -29,7 +32,8 @@ const IP = "35.238.125.100";
         database: "fixed-beams",
         entities: [
           UserEntity,
-          BillEntity
+          BillEntity,
+          DomainEntity
         ],
         // Borrar esto para cuando ya se ponga en produccion
         synchronize: true,
