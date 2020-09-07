@@ -44,7 +44,7 @@ export class BillController {
         billCreateDto.dateTime = new Date();
         billCreateDto.latitude = bodyParams.latitude;
         billCreateDto.longitude = bodyParams.longitude;
-        billCreateDto.user = Number(bodyParams.user)
+        billCreateDto.idUser = Number(bodyParams.idUser)
         try {
             // Validation
             const errors: ValidationError[] = await validate(billCreateDto);
@@ -60,7 +60,7 @@ export class BillController {
                 newBill.latitude = billCreateDto.latitude;
                 newBill.longitude = billCreateDto.longitude;
                 newBill.user = new UserEntity();
-                newBill.user.id = billCreateDto.user;
+                newBill.user.id = billCreateDto.idUser;
                 //Send to DB
                 const response = await this.billService.createOne(newBill);
                 // Send response

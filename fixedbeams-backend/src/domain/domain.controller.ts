@@ -4,10 +4,14 @@ import { DomainCreateDto } from './dto/domain.create.dto';
 import { ValidationError, validate } from 'class-validator';
 import { DomainUpdaeDto } from './dto/domain.update.dto';
 import { DomainEntity } from './domain.entity';
+import { CategoryService } from '../category/category.service';
 
 @Controller("domain")
 export class DomainController {
-    constructor(private readonly domainService: DomainService){}
+    constructor(
+        private readonly domainService: DomainService,
+        private readonly categoryService: CategoryService
+    ){}
 
     @Get(":id")
     @HttpCode(200)
@@ -15,7 +19,6 @@ export class DomainController {
         @Param() pathParams
     ){
         const id = Number(pathParams.id);
-
         try {
             const response = await this.domainService.findOne(id);
             return response;
@@ -39,6 +42,8 @@ export class DomainController {
             // Validation
             const errors: ValidationError[] = await validate(domainCreateDto);
             if(errors.length > 0) {
+                console.log(errors);
+                
                 throw new BadRequestException("Error in fields");
             } else {
                 // Create instance
@@ -88,6 +93,21 @@ export class DomainController {
         } catch (error) {
             console.log(error);
             throw new BadRequestException("Error Updating");
+        }
+    }
+
+    @Get("categories/:id")
+    @HttpCode(200)
+    async findDomainCategories(
+        @Param() pathParams
+    ){
+        const id = Number(pathParams.id);
+        try {
+            const response = await this.categoryService.findAllByDomain(id);
+            return response;
+        } catch (error) {
+            console.log(error);
+            throw new BadRequestException("Internal Server Error")
         }
 
     }

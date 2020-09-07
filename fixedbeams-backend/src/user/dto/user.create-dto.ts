@@ -31,5 +31,6 @@ export class UserCreateDto {
 
     @IsOptional()
     @IsUrl()
+    @Length(3, 150)
     srcImage?: string;
 }

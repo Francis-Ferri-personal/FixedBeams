@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { CategoryEntity } from '../category/category.entity';
 
 
 @Entity("Domain")
@@ -26,5 +27,11 @@ export class DomainEntity {
         nullable: false
     })
     description: string;
+
+    @OneToMany(
+        type => CategoryEntity,
+        category => category.domain
+    )
+    categories: CategoryEntity[];
 
 }

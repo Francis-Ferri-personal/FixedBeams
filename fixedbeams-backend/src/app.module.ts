@@ -8,19 +8,22 @@ import { BillModule } from './bill/bill.module';
 import { BillEntity } from './bill/bill.entity';
 import { DomainModule } from './domain/domain.module';
 import { DomainEntity } from './domain/domain.entity';
+import { CategoryModule } from './category/category.module';
+import { CategoryEntity } from './category/category.entity';
 
 
 /*
  docker run -d -p 5001:3306 --name fixed-beams -e MYSQL_ROOT_PASSWORD=12345678 -e MYSQL_DATABASE=fixed-beams -e MYSQL_USER=francis -e MYSQL_PASSWORD=12345678 --restart unless-stopped mysql:5.7 
 */
 
-const IP = "35.238.125.100";
+const IP = "34.121.130.26";
 
 @Module({
   imports: [
     UserModule,
     BillModule,
     DomainModule,
+    CategoryModule,
     TypeOrmModule.forRoot(
       {
         name: "default",
@@ -33,7 +36,8 @@ const IP = "35.238.125.100";
         entities: [
           UserEntity,
           BillEntity,
-          DomainEntity
+          DomainEntity,
+          CategoryEntity
         ],
         // Borrar esto para cuando ya se ponga en produccion
         synchronize: true,

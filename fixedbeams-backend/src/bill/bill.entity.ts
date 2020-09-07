@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { type } from "os";
 import { UserEntity } from '../user/user.entity';
 
@@ -58,6 +58,7 @@ export class BillEntity {
         type => UserEntity,
         user => user.bills
     )
+    @JoinColumn({ name: "idUser" })
     user: UserEntity;
     
 }

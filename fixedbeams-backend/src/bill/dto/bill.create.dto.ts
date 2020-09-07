@@ -24,5 +24,5 @@ export class BillCreateDto {
     @IsNotEmpty()
     @IsInt()
     @Min(0)
-    user: number;
+    idUser: number;
 }
