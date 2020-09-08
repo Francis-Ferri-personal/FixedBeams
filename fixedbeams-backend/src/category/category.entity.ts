@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { DomainEntity } from '../domain/domain.entity';
+import { type } from "os";
+import { ProductEntity } from '../product/product.entity';
 
 
 @Entity("Category")
@@ -42,5 +44,11 @@ export class CategoryEntity {
     )
     @JoinColumn({ name: "idDomain" })
     domain: DomainEntity;
+
+    @OneToMany(
+        type => ProductEntity,
+        product => product.category
+    )
+    products: ProductEntity[];
 
 }
