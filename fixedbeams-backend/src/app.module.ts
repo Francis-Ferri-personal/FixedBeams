@@ -22,7 +22,8 @@ import { ProductEntity } from './product/product.entity';
  docker run -d -p 5001:3306 --name fixed-beams -e MYSQL_ROOT_PASSWORD=12345678 -e MYSQL_DATABASE=fixed-beams -e MYSQL_USER=francis -e MYSQL_PASSWORD=12345678 --restart unless-stopped mysql:5.7 
 */
 
-const IP = "34.121.130.26";
+//const IP = "34.121.130.26";
+const IP = "localhost";
 
 @Module({
   imports: [
