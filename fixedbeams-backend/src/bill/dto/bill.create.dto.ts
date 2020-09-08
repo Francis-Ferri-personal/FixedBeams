@@ -6,6 +6,7 @@ export class BillCreateDto {
     paymentType: string;
     
     @IsNotEmpty()
+    @IsNumber()
     @Min(0)
     total: number;
 

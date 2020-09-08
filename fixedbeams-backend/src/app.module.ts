@@ -16,6 +16,8 @@ import { RolModule } from './rol/rol.module';
 import { RolEntity } from './rol/rol.entity';
 import { ProductModule } from './product/product.module';
 import { ProductEntity } from './product/product.entity';
+import { BillDetailModule } from './bill-detail/bill-detail.module';
+import { BillDetailEntity } from './bill-detail/bill-detail.entity';
 
 
 /*
@@ -34,6 +36,7 @@ const IP = "localhost";
     FactoryModule,
     RolModule,
     ProductModule,
+    BillDetailModule,
     TypeOrmModule.forRoot(
       {
         name: "default",
@@ -50,7 +53,8 @@ const IP = "localhost";
           CategoryEntity,
           FactoryEntity,
           RolEntity,
-          ProductEntity
+          ProductEntity,
+          BillDetailEntity
         ],
         // Borrar esto para cuando ya se ponga en produccion
         synchronize: true,

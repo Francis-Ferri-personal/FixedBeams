@@ -1,7 +1,8 @@
-import { PrimaryGeneratedColumn, Column, Entity, ManyToOne, JoinColumn } from "typeorm";
+import { PrimaryGeneratedColumn, Column, Entity, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { type } from "os";
 import { CategoryEntity } from '../category/category.entity';
 import { FactoryEntity } from "src/factory/factory.entity";
+import { BillDetailEntity } from '../bill-detail/bill-detail.entity';
 
 @Entity("Product")
 export class ProductEntity {
@@ -57,5 +58,11 @@ export class ProductEntity {
     )
     @JoinColumn({ name: "idFactory" })
     factory: FactoryEntity;
+
+    @OneToMany(
+        type => BillDetailEntity,
+        billDetail => billDetail.product
+    )
+    billDetails: BillDetailEntity[];
 
 }

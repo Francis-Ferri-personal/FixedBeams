@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { type } from "os";
 import { UserEntity } from '../user/user.entity';
+import { BillDetailEntity } from '../bill-detail/bill-detail.entity';
 
 
 @Entity("Bill")
@@ -24,8 +25,8 @@ export class BillEntity {
         name: "total",
         type: "decimal",
         precision: 10, 
-        nullable: false,
         scale: 2,
+        nullable: false,
     })
     total: number;
 
@@ -60,5 +61,11 @@ export class BillEntity {
     )
     @JoinColumn({ name: "idUser" })
     user: UserEntity;
+
+    @OneToMany(
+        type => BillDetailEntity,
+        billDetail => billDetail.bill
+    )
+    billDetails: BillDetailEntity[];
     
 }
