@@ -5,15 +5,27 @@ import { ValidationError, validate } from 'class-validator';
 import { BillUpdateDto } from './dto/bill.update.dto';
 import { BillEntity } from './bill.entity';
 import { UserEntity } from 'src/user/user.entity';
+import { BillDetailController } from 'src/bill-detail/bill-detail.controller';
+import { BillDetailService } from 'src/bill-detail/bill-detail.service';
+import { getManager } from 'typeorm';
+import { BillDetailEntity } from '../bill-detail/bill-detail.entity';
+import { ProductService } from '../product/product.service';
+import { ProductEntity } from 'src/product/product.entity';
 
 
 
 @Controller("bill")
 export class BillController {
 
+    billDetailController: BillDetailController
+    
     constructor(
-        private readonly billService: BillService
-    ){}
+        private readonly billService: BillService,
+        private readonly billDetailService: BillDetailService,
+        private readonly productService: ProductService
+    ){
+        this.billDetailController = new BillDetailController(this.billDetailService)
+    }
     
     @Get(":id")
     @HttpCode(200)
@@ -104,6 +116,29 @@ export class BillController {
         } catch (error) {
             console.log(error);
             throw new BadRequestException("Error updating")
+        }
+    }
+
+    @Post("register-purchase")
+    @HttpCode(201)
+    async registerPurchase(
+        @Body() bodyParams
+    ){ 
+        try {
+            //TODO: Trasacciones bien hechas
+            const billAdded = await this.addBill(bodyParams);
+            const idBill = billAdded.id;
+            bodyParams.billDetails.forEach( async billDetail => {
+                billDetail.idBill = idBill;                
+                let product: ProductEntity = await this.productService.findOne(billDetail.idProduct);
+                product.stock = product.stock - billDetail.quantity;
+                await this.productService.updateOne(product);
+                await this.billDetailController.addBillDetail(billDetail);
+            })
+            return {message: "Successful purchase"};
+        } catch (error) {
+            console.log(error);
+            throw new InternalServerErrorException("Server error");
         }
     }
 
