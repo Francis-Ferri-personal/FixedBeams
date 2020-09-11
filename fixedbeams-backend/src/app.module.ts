@@ -25,7 +25,7 @@ import { BillDetailEntity } from './bill-detail/bill-detail.entity';
 */
 
 //const IP = "34.121.130.26";
-const IP = "localhost";
+const IP = "34.121.130.26";
 
 @Module({
   imports: [

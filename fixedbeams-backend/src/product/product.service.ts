@@ -17,7 +17,14 @@ export class ProductService {
     findOne(id: number){
         return this.repository.findOne(id);
     }
+
     updateOne(updatedProduct: ProductEntity){
         return this.repository.save(updatedProduct);
+    }
+
+    findAllByCategory(id: number){
+        return this.repository.find({where: [
+            {category: id}
+        ]})
     }
 }

@@ -29,6 +29,15 @@ export class ProductEntity {
         nullable: false
     })
     summary: string;
+
+    @Column({
+        name: "unitPrice",
+        type: "decimal",
+        precision: 10, 
+        scale: 2,
+        nullable: false,
+    })
+    price: number;
     
     @Column({
         name: "stock",

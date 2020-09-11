@@ -5,12 +5,15 @@ import { ValidationError, validate } from 'class-validator';
 import { CategoryEntity } from './category.entity';
 import { DomainEntity } from 'src/domain/domain.entity';
 import { CategoryUpdateDto } from './dto/category.update.dto';
+import { ProductService } from '../product/product.service';
 
 
 @Controller("category")
 export class CategoryController {
     
-    constructor(private readonly categoryService: CategoryService){}
+    constructor(
+        private readonly categoryService: CategoryService,
+        private readonly productService :ProductService){}
 
     @Get(":id")
     @HttpCode(200)
@@ -95,6 +98,21 @@ export class CategoryController {
         } catch (error) {
             console.log(error);
             throw new BadRequestException("Error updating")
+        }
+    }
+    
+    @Get("products/:id")
+    @HttpCode(200)
+    async findCategoryProducts(
+        @Param() pathParam
+    ){
+        const id = Number(pathParam.id);
+        try {
+            const response = await this.productService.findAllByCategory(id);
+            return response;
+        } catch (error) {
+            console.log(error);
+            throw new InternalServerErrorException("Internal Server error");
         }
     }
 

@@ -40,6 +40,7 @@ export class ProductController {
         productCreateDto.name = bodyParams.name;
         productCreateDto.summary = bodyParams.summary;
         productCreateDto.stock = bodyParams.stock;
+        productCreateDto.price = bodyParams.price;
         productCreateDto.srcImage = bodyParams.srcImage;
         productCreateDto.idCategory = bodyParams.idCategory;
         productCreateDto.idFactory = bodyParams.idFactory;
@@ -54,6 +55,7 @@ export class ProductController {
                 const newProduct = new ProductEntity();
                 newProduct.name = productCreateDto.name;
                 newProduct.summary = productCreateDto.summary;
+                newProduct.price = productCreateDto.price;
                 newProduct.stock = productCreateDto.stock;
                 newProduct.srcImage = productCreateDto.srcImage;
                 const category = new CategoryEntity();
@@ -85,6 +87,7 @@ export class ProductController {
         productUpdateDto.id = Number(pathParams.id);
         productUpdateDto.name = bodyParams.name;
         productUpdateDto.summary = bodyParams.summary;
+        productUpdateDto.price = bodyParams.price;
         productUpdateDto.stock = bodyParams.stock;
         productUpdateDto.srcImage = bodyParams.srcImage;
         productUpdateDto.idCategory = bodyParams.idCategory;
@@ -101,6 +104,7 @@ export class ProductController {
                 updatedProduct.id = productUpdateDto.id;
                 updatedProduct.name = productUpdateDto.name;
                 updatedProduct.summary = productUpdateDto.summary;
+                updatedProduct.price = productUpdateDto.price;
                 updatedProduct.stock = productUpdateDto.stock;
                 updatedProduct.srcImage = productUpdateDto.srcImage;
                 const category = new CategoryEntity();
