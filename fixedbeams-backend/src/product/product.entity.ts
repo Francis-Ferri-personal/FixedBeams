@@ -31,7 +31,7 @@ export class ProductEntity {
     summary: string;
 
     @Column({
-        name: "unitPrice",
+        name: "price",
         type: "decimal",
         precision: 10, 
         scale: 2,
