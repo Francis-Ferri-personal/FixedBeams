@@ -20,13 +20,6 @@ import { BillDetailModule } from './bill-detail/bill-detail.module';
 import { BillDetailEntity } from './bill-detail/bill-detail.entity';
 
 
-/*
- docker run -d -p 5001:3306 --name fixed-beams -e MYSQL_ROOT_PASSWORD=12345678 -e MYSQL_DATABASE=fixed-beams -e MYSQL_USER=francis -e MYSQL_PASSWORD=12345678 --restart unless-stopped mysql:5.7 
-*/
-
-//const IP = "34.121.130.26";
-const IP = "34.121.130.26";
-
 @Module({
   imports: [
     UserModule,
@@ -41,11 +34,11 @@ const IP = "34.121.130.26";
       {
         name: "default",
         type: "mysql",
-        host: IP,
-        port: 5001,
-        username: "francis",
+        host: "localhost",
+        port: 666,
+        username: "admin",
         password: "12345678",
-        database: "fixed-beams",
+        database: "fixedbeams",
         entities: [
           UserEntity,
           BillEntity,
