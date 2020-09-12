@@ -13,7 +13,7 @@ export class ProductUpdateDto {
 
     @IsOptional()
     @IsNotEmpty()
-    @Length(3, 45)
+    @Length(3, 150)
     summary?: string;
 
     @IsOptional()
