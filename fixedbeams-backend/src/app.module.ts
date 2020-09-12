@@ -34,7 +34,7 @@ import { BillDetailEntity } from './bill-detail/bill-detail.entity';
       {
         name: "default",
         type: "mysql",
-        host: "fixedbemas-database",
+        host: "fixedbeams-database",
         port: 3306,
         username: "admin",
         password: "12345678",
