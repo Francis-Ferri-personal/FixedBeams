@@ -9,6 +9,9 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { CarComponent } from './components/car/car.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from "@angular/material/dialog";
+import { MatDialogComponent } from './modals/mat-dialog/mat-dialog.component';
 
 
 
@@ -18,16 +21,22 @@ import {HttpClientModule} from "@angular/common/http";
     HomeComponent,
     MainbarComponent,
     NavbarComponent,
-    CarComponent
+    CarComponent,
+    MatDialogComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule,
   ],
   providers: [],
+  entryComponents: [
+   MatDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

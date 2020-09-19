@@ -1,13 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {MainbarComponent} from "../shared/mainbar/mainbar.component";
+import {MainbarComponent} from "../../components/shared/mainbar/mainbar.component";
 
 @Component({
-  selector: 'app-car',
-  templateUrl: './car.component.html',
-  styleUrls: ['./car.component.css']
+  selector: 'app-mat-dialog',
+  templateUrl: './mat-dialog.component.html',
+  styleUrls: ['./mat-dialog.component.css']
 })
-export class CarComponent implements OnInit {
+export class MatDialogComponent implements OnInit {
 
   constructor(
     private readonly _matDialog: MatDialogRef<MainbarComponent>,
