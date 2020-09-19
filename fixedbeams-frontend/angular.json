@@ -124,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "fixedbeams-frontend"
+    }
+  },
+  "defaultProject": "fixedbeams-frontend",
+  "cli": {
+    "analytics": "324cc1c9-04d7-4107-a328-14ebd3db98bf"
+  }
 }

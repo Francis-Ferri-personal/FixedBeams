@@ -40,11 +40,11 @@ const IP = "34.121.130.26";
       {
         name: "default",
         type: "mysql",
-        host: IP,
-        port: 5001,
-        username: "francis",
-        password: "12345678",
-        database: "fixed-beams",
+        host: "localhost",
+        port: 32795,
+        username: "roger",
+        password: "1234",
+        database: "fixed",
         entities: [
           UserEntity,
           BillEntity,
