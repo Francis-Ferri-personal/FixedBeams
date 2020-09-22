@@ -5,18 +5,29 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { MainbarComponent } from './components/shared/mainbar/mainbar.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { CategoryCardComponent } from './components/category-card/category-card.component';
+import { CategoryService } from './services/category.service';
+import { DomainService } from './services/domain.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MainbarComponent,
-    NavbarComponent
+    NavbarComponent,
+    CategoryCardComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    CategoryService,
+    DomainService
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

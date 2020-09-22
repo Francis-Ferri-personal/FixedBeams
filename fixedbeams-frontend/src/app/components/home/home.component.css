@@ -1,0 +1,22 @@
+.textButton {
+  background-color: #FFBD3B; /* Green */
+  border: 1px solid black;
+  font-weight: 700;
+}
+
+#searchBoxTitle {
+  border: 1px solid lightslategrey;
+}
+
+#slogan {
+  padding-top: 100px;
+  padding-left: 100px;
+  padding-right: 100px;
+  text-align: center;
+  font-size: xx-large;
+}
+#searchBoxTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
