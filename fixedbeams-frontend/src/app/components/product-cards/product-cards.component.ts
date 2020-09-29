@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Category } from 'src/app/models/cotegory.model';
 import { Product } from '../../models/product.model';
 import { CategoryService } from '../../services/category.service';
@@ -15,10 +15,16 @@ export class ProductCardsComponent implements OnInit {
   categoryName: string;
   categoryProducts: Product[];
 
+  modalVisible: boolean;
+
   constructor(
     private readonly _categoryService: CategoryService,
-    private readonly _activatedRoute: ActivatedRoute
+    private readonly _activatedRoute: ActivatedRoute,
+    private readonly _router: Router
   ) {
+    this.categoryName = "";
+    this.categoryProducts = [];
+    this.modalVisible = false;
     const obsRuta = this._activatedRoute.params;
     obsRuta.subscribe(
       (parametros: Params) => {
@@ -58,5 +64,16 @@ export class ProductCardsComponent implements OnInit {
       }
     )
   }
+
+  mostrarModal(){
+    this.modalVisible = true;
+  }
+
+  irAProducto(product: Product){
+    const url = ["/product", product.id];
+    this._router.navigate(url);
+  }
+
+  
 
 }

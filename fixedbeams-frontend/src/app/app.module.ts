@@ -12,6 +12,7 @@ import { DomainService } from './services/domain.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarItemComponent } from './components/shared/navbar-item/navbar-item.component';
 import { ProductCardsComponent } from './components/product-cards/product-cards.component';
+import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ProductCardsComponent } from './components/product-cards/product-cards.
     NavbarComponent,
     CategoryCardComponent,
     NavbarItemComponent,
-    ProductCardsComponent
+    ProductCardsComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
