@@ -11,13 +11,18 @@ export class UserService {
     ){}
 
     createOne(newUser: UserEntity){
-        return this.repository.save(newUser)
+        return this.repository.save(newUser);
     }
 
-    findOne(id: number){
-        //TODO:
-        console.log("Hola");
-        
+    findOne(email: string, password: string){
+        return this.repository.findOne({email: email, password: password});
+    }
+
+    findOneID(id: number){
+        return this.repository.findOne(id);
+    }
+    editOne( editedUser: UserEntity){
+        return this.repository.save(editedUser);
     }
     
 }

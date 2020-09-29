@@ -1,0 +1,11 @@
+.navbar {
+    background-color: #CCD3DF;
+    border: 1px solid lightslategrey;
+}
+.nav-item.active {
+    background-color: #FFBD3B;
+    border: 2px solid black;
+}
+
+
+  
