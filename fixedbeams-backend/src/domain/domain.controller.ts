@@ -1,4 +1,4 @@
-import { Controller, Get, Param, InternalServerErrorException, Post, HttpCode, Body, BadRequestException, Put } from '@nestjs/common';
+import { Controller, Get, Param, InternalServerErrorException, Post, HttpCode, Body, BadRequestException, Put, Res } from '@nestjs/common';
 import { DomainService } from './domain.service';
 import { DomainCreateDto } from './dto/domain.create.dto';
 import { ValidationError, validate } from 'class-validator';
@@ -110,4 +110,30 @@ export class DomainController {
         }
 
     }
+
+    @Get("view/:id")
+    async sendDomainView(
+        @Param() pathParams,
+        @Res() res
+    ){
+        const id = Number(pathParams.id);
+        try {
+            const domainCategories = await this.categoryService.findAllByDomain(id);
+            if(domainCategories){
+                return res.render(
+                    "app/app-component", 
+                    {pagina: "category-cards", domainCategories: domainCategories}
+                );
+            } else {
+                return res.render(
+                    "app/app-component", 
+                    {pagina: "search", mensaje: "Categorias no encontradas"}
+                );
+            }
+        } catch (error) {
+            console.log(error);
+            throw new BadRequestException("Internal Server Error")
+        }
+    }
+
 }
