@@ -6,7 +6,7 @@ export class CategoryCreateDto {
     name: string;
 
     @IsNotEmpty()
-    @Length(3, 45)
+    @Length(3, 150)
     description: string;
 
     @IsNotEmpty()

@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
-
+import { AppComponent } from './app.component';\
 import {AppRoutingModule} from "./app-routing.module";
+import { SearchComponent } from './components/search/search.component';
 import { HomeComponent } from './components/home/home.component';
 import { MainbarComponent } from './components/shared/mainbar/mainbar.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -15,18 +15,29 @@ import { MatDialogComponent } from './modals/mat-dialog/mat-dialog.component';
 import {MatCardModule} from "@angular/material/card";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouteBillComponent } from './route/route-bill/route-bill.component';
-
-
-
+import { CategoryCardComponent } from './components/category-card/category-card.component';
+import { CategoryService } from './services/category.service';
+import { DomainService } from './services/domain.service';
+import { NavbarItemComponent } from './components/shared/navbar-item/navbar-item.component';
+import { ProductCardsComponent } from './components/product-cards/product-cards.component';
+import { ProductComponent } from './components/product/product.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    SearchComponent,
     MainbarComponent,
     NavbarComponent,
     CarComponent,
     MatDialogComponent,
-    RouteBillComponent
+    RouteBillComponent,
+    CategoryCardComponent,
+    NavbarItemComponent,
+    ProductCardsComponent,
+    ProductComponent,
+    CategoryCardComponent,
+    NavbarItemComponent,
+    ProductCardsComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
@@ -39,10 +50,15 @@ import { RouteBillComponent } from './route/route-bill/route-bill.component';
     MatCardModule,
     NgbModule,
   ],
-  providers: [],
+  providers: [
+    CategoryService,
+    DomainService
+  ],
   entryComponents: [
    MatDialogComponent
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }
