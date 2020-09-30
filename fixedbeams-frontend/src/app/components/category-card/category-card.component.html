@@ -1,0 +1,11 @@
+<app-search></app-search>
+<div class="card-deck d-flex justify-content-center">
+  <div class="card puntero fadeIn" style="width: 16rem;" 
+    *ngFor="let category of domainCategories"
+    (click)="irAProductos(category)"> 
+    <img class="card-img-top" [src]="category.srcImage" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{category.name}}</h5>
+      <p class="card-text">{{category.description}}</p>
+  </div>
+</div>
