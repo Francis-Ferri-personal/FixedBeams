@@ -26,6 +26,7 @@ import { BillDetailEntity } from './bill-detail/bill-detail.entity';
 
 const IP = "34.73.160.90";
 
+
 @Module({
   imports: [
     UserModule,

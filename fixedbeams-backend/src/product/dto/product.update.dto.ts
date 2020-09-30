@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsInt, Min, IsOptional, Length, IsPositive, IsUrl } from "class-validator";
+import { IsNotEmpty, IsInt, Min, IsOptional, Length, IsPositive, IsUrl, IsNumber } from "class-validator";
 
 export class ProductUpdateDto {
     @IsNotEmpty()
@@ -13,8 +13,14 @@ export class ProductUpdateDto {
 
     @IsOptional()
     @IsNotEmpty()
-    @Length(3, 45)
+    @Length(3, 150)
     summary?: string;
+
+    @IsOptional()
+    @IsNotEmpty()
+    @IsNumber()
+    @Min(0)
+    price?: number;
 
     @IsOptional()
     @IsNotEmpty()

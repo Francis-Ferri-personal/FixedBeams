@@ -13,6 +13,6 @@ export class DomainUpdaeDto {
     
     @IsOptional()
     @IsNotEmpty()
-    @Length(3, 45)
+    @Length(3, 150)
     description?: string;
 }

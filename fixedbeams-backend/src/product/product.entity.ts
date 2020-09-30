@@ -25,10 +25,19 @@ export class ProductEntity {
     @Column({
         name: "summary",
         type: "varchar",
-        length: 45,
+        length: 150,
         nullable: false
     })
     summary: string;
+
+    @Column({
+        name: "price",
+        type: "decimal",
+        precision: 10, 
+        scale: 2,
+        nullable: false,
+    })
+    price: number;
     
     @Column({
         name: "stock",

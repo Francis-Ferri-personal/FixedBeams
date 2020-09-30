@@ -23,7 +23,7 @@ export class FactoryEntity {
     @Column({
         name: "description",
         type: "varchar",
-        length: 45,
+        length: 150,
         nullable: false
     })
     description: string;
