@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Product } from 'src/app/models/product.model';
+import { Product, ProductCart } from 'src/app/models/product.model';
 import { ProductService } from '../../services/product.service';
 import { CarritoService } from '../../services/carrito.service';
 
@@ -64,7 +64,13 @@ export class ProductComponent implements OnInit {
       this._carritoService.borrarProducto(this.product);
       return;
     }
-    const produtoCarrito = {id: this.product.id, cantidad: this.cantidad};
+    const produtoCarrito: ProductCart = {
+      id: this.product.id, 
+      name: this.product.name, 
+      price: this.product.price, 
+      quantity: this.cantidad,
+      srcImage: this.product.srcImage
+    };
     this._carritoService.guardarProduco(produtoCarrito);
     alert("Producto agregado");
   }
