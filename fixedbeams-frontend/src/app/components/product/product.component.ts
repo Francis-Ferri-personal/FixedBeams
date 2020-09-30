@@ -19,7 +19,7 @@ export class ProductComponent implements OnInit {
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _carritoService: CarritoService,
     private readonly _router: Router
-  ) { 
+  ) {
     this.cantidad = 0;
     const obsRuta = this._activatedRoute.params;
     obsRuta.subscribe(
@@ -45,7 +45,7 @@ export class ProductComponent implements OnInit {
       (error) => {
         console.log(error);
       }
-    )
+    );
   }
   aumentarCantidad(){
     if(this.cantidad < this.product.stock){
@@ -58,7 +58,7 @@ export class ProductComponent implements OnInit {
       this.cantidad -= 1;
     }
   }
-  
+
   guardarProducto(){
     if (this.cantidad === 0){
       this._carritoService.borrarProducto(this.product);

@@ -1,9 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';\
+import { AppComponent } from './app.component';
 import {AppRoutingModule} from "./app-routing.module";
 import { SearchComponent } from './components/search/search.component';
-import { HomeComponent } from './components/home/home.component';
 import { MainbarComponent } from './components/shared/mainbar/mainbar.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { CarComponent } from './components/car/car.component';
@@ -21,6 +20,7 @@ import { DomainService } from './services/domain.service';
 import { NavbarItemComponent } from './components/shared/navbar-item/navbar-item.component';
 import { ProductCardsComponent } from './components/product-cards/product-cards.component';
 import { ProductComponent } from './components/product/product.component';
+import { HomeComponent } from './components/home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +37,8 @@ import { ProductComponent } from './components/product/product.component';
     CategoryCardComponent,
     NavbarItemComponent,
     ProductCardsComponent,
-    ProductComponent
+    ProductComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

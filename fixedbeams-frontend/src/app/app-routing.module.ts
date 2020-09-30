@@ -34,7 +34,7 @@ const routes: Routes = [
     component: ProductCardsComponent
   },
   {
-    path: "product/:id", 
+    path: "product/:id",
     component: ProductComponent
   }
 ];

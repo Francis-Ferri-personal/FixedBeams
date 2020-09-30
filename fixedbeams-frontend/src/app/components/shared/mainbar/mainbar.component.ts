@@ -15,7 +15,7 @@ export class MainbarComponent implements OnInit {
     apellido: 'Guamushig',
   };
   initcar = document.getElementById('car');
-  courselist = document.querySelector('#car-list');
+  productlist = document.querySelector('#car-list');
 
   constructor(
     private readonly _router: Router,
@@ -49,38 +49,38 @@ export class MainbarComponent implements OnInit {
   }
 
   emptyCarAll() {
-    while (this.courselist.firstChild){
-      this.courselist.removeChild(this.courselist.firstChild);
+    while (this.productlist.firstChild){
+      this.productlist.removeChild(this.productlist.firstChild);
     }
     return false;
   }
-  getCourseocalStorage(){
+  getProductStorage(){
     let courseLS;
-    if(localStorage.getItem('courses') === null){
+    if(localStorage.getItem('products') === null){
       courseLS = [];
     }else{
-      courseLS = JSON.parse(localStorage.getItem('courses'));
+      courseLS = JSON.parse(localStorage.getItem('products'));
     }
     return courseLS;
   }
-  insertCar(course){
+  insertCar(product){
     const row = document.createElement('tr');
     row.innerHTML = `
         <td>
-            <img src="${course.imagen}">
+            <img src="${product.imagen}">
         </td>
         <td>
-            ${course.titulo}
+            ${product.titulo}
         </td>
         <td>
-            ${course.precio}
+            ${product.precio}
         </td>
         <td>
-            <a href="#" class="borrar-curso" data-id="${course.id}" >X
+            <a href="#" class="borrar-curso" data-id="${product.id}" >X
         </td>
 
     `;
-    // listaCursos.appendChild(row);
+    this.productlist.appendChild(row);
     // guardarCursoLocalStorage(curso);
 
   }
