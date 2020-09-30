@@ -12,6 +12,9 @@ import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDialogModule} from "@angular/material/dialog";
 import { MatDialogComponent } from './modals/mat-dialog/mat-dialog.component';
+import {MatCardModule} from "@angular/material/card";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouteBillComponent } from './route/route-bill/route-bill.component';
 
 
 
@@ -22,7 +25,8 @@ import { MatDialogComponent } from './modals/mat-dialog/mat-dialog.component';
     MainbarComponent,
     NavbarComponent,
     CarComponent,
-    MatDialogComponent
+    MatDialogComponent,
+    RouteBillComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +36,8 @@ import { MatDialogComponent } from './modals/mat-dialog/mat-dialog.component';
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
+    MatCardModule,
+    NgbModule,
   ],
   providers: [],
   entryComponents: [

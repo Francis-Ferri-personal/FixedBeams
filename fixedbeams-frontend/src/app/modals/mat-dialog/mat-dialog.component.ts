@@ -18,4 +18,7 @@ export class MatDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  close() {
+    this._matDialog.close({respuesta: 'adios'});
+  }
 }

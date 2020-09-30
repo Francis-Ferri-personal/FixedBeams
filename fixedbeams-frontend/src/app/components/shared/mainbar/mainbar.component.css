@@ -7,3 +7,6 @@
   #searchBox {
     border: 1px solid lightslategrey;
   }
+.dropdown-menu {
+  width: 350px !important;
+}
