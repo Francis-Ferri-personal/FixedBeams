@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class CarritoService {
 
   productosCarrito;
-  constructor() { 
+  constructor() {
     this.cargarStorage();
   }
 
@@ -49,6 +49,9 @@ export class CarritoService {
       this.productosCarrito.splice(index, 1);
       this.guardarStorage();
     }
+  }
+  getProductCar(){
+    return this.productosCarrito;
   }
 
 

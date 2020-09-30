@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {CarComponent} from '../../car/car.component';
 import {MatDialogComponent} from '../../../modals/mat-dialog/mat-dialog.component';
+import {CarritoService} from "../../../services/carrito.service";
 
 @Component({
   selector: 'app-mainbar',
@@ -20,11 +21,15 @@ export class MainbarComponent implements OnInit {
   constructor(
     private readonly _router: Router,
     private readonly _activatedRoute: ActivatedRoute,
-    private readonly _matDialog: MatDialog
-  ) { }
+    private readonly _matDialog: MatDialog,
+    private readonly _serviceCar: CarritoService,
+  ) {
+    this.insertCar();
+  }
 
 
   ngOnInit(): void {
+    // this.insertCar();
   }
 
   goChildren(route: string) {
@@ -56,14 +61,15 @@ export class MainbarComponent implements OnInit {
   }
   getProductStorage(){
     let courseLS;
-    if(localStorage.getItem('products') === null){
+    if(localStorage.getItem('productoscarrito') === null){
       courseLS = [];
     }else{
-      courseLS = JSON.parse(localStorage.getItem('products'));
+      courseLS = JSON.parse(localStorage.getItem('productoscarrito'));
     }
     return courseLS;
   }
-  insertCar(product){
+  insertCar(){
+    const product = this._serviceCar.getProductCar();
     const row = document.createElement('tr');
     row.innerHTML = `
         <td>
@@ -82,6 +88,17 @@ export class MainbarComponent implements OnInit {
     `;
     this.productlist.appendChild(row);
     // guardarCursoLocalStorage(curso);
-
   }
+  // readData(product){
+  //   const infProcuct = {
+  //     imagen: product.querySelector('img').src,
+  //     titulo: product.querySelector('h4').textContent,
+  //     precio: product.querySelector('span').textContent,
+  //     id: product.querySelector('a').getAttribute('data-id')
+  //
+  //   };
+  //   console.log(infProcuct);
+  //   this.insertCar(infProcuct);
+  //
+  // }
 }
