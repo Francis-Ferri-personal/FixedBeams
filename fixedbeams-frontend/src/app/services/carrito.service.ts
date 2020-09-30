@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ProductCart } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,10 @@ export class CarritoService {
     localStorage.setItem("productosCarrito",JSON.stringify(this.productosCarrito));
   }
 
-  guardarProduco(producto){
+  guardarProduco(producto: ProductCart){
     let productoExistente = this.productosCarrito.find((productoCarrito) => productoCarrito.id == producto.id);
     if(productoExistente){
-      productoExistente.cantidad = producto.cantidad;
+      productoExistente.cantidad = producto.quantity;
     } else {
       this.productosCarrito.push(producto);
     }
