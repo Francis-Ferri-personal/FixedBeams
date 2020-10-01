@@ -13,4 +13,7 @@ export class BillService {
       bill
     );
   }
+  getOne(){
+    return this._httpClient.get(this.url + '/bill');
+  }
 }

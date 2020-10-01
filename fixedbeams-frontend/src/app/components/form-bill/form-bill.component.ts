@@ -1,5 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CarritoService} from "../../services/carrito.service";
+import {BillDetailService} from "../../services/bill-detail.service";
+import {Router} from "@angular/router";
+import {BillService} from "../../services/bill.service";
 
 @Component({
   selector: 'app-form-bill',
@@ -15,8 +18,12 @@ export class FormBillComponent implements OnInit {
   products;
   total = 0;
   iduser = 1;
+  billdetail;
   constructor(
-    private readonly _serviceCar: CarritoService
+    private readonly _serviceCar: CarritoService,
+    private readonly _serviceBillDetail: BillDetailService,
+    private readonly _route: Router,
+    private readonly _serviceBill: BillService
   ) { }
 
   ngOnInit(): void {
@@ -45,5 +52,4 @@ export class FormBillComponent implements OnInit {
       idUser: this.iduser
     });
   }
-
 }
