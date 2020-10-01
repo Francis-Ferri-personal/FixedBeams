@@ -4,7 +4,6 @@ import { AppComponent } from './app.component';
 import { SearchComponent } from './components/search/search.component';
 import { MainbarComponent } from './components/shared/mainbar/mainbar.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { CarComponent } from './components/car/car.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,14 +22,12 @@ import {BillService} from "./services/bill.service";
 import { FormBillComponent } from './components/form-bill/form-bill.component';
 import {BillDetailService} from "./services/bill-detail.service";
 import {AppRoutingModule} from "./app-routing.module";
-
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     MainbarComponent,
     NavbarComponent,
-    CarComponent,
     MatDialogComponent,
     RouteBillComponent,
     CategoryCardComponent,
@@ -53,7 +50,7 @@ import {AppRoutingModule} from "./app-routing.module";
     MatDialogModule,
     MatCardModule,
     NgbModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [
     CategoryService,
