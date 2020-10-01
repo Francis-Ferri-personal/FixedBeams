@@ -8,19 +8,20 @@ import { ProductCardsComponent } from './components/product-cards/product-cards.
 import { ProductComponent } from './components/product/product.component';
 import {SearchComponent} from "./components/search/search.component";
 const routes: Routes = [
-  {
-    component: CarComponent,
-    path: 'car'
-  },
-  {
-    component: RouteBillComponent,
-    path: 'bill'
-  },
-    {path: "domain/:id",component: CategoryCardComponent},
-    {path: "category/:id", component: ProductCardsComponent},
-    {path: "product/:id", component: ProductComponent},
-    {path: "products", component: ProductCardsComponent},
-    {path: "", component: SearchComponent},
+    {
+      component: CarComponent,
+      path: 'car'
+    },
+    {
+      component: RouteBillComponent,
+      path: 'bill'
+    },
+      {path: "domain/:id",component: CategoryCardComponent},
+      {path: "category/:id", component: ProductCardsComponent},
+      {path: "product/:id", component: ProductComponent},
+      {path: "products", component: ProductCardsComponent},
+      {path: "", component: SearchComponent}
+    ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

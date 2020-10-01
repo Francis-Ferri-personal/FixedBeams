@@ -39,7 +39,7 @@ export class RouteBillComponent implements OnInit {
       }
     );
     this.ultimoId();
-   // this.createBillDetailService();
+    this.createBillDetailService();
   }
   insertCart() {
     this.products = this._serviceCar.getProductCar();
@@ -51,7 +51,7 @@ export class RouteBillComponent implements OnInit {
           quantity: Number(valroActual.quantity),
           unitPrice: Number(valroActual.price),
           total: (Number(valroActual.price) * Number(valroActual.quantity)),
-          idBill: 10,
+          idBill: this.idbill,
           idProduct: valroActual.id
         };
         this.observable = this._serviceBillDetail.create(this.billdetail);
@@ -65,7 +65,7 @@ export class RouteBillComponent implements OnInit {
     );
   }
   ultimoId() {
-    const observableBringAll = this._serviceBill.getOne();
+    const observableBringAll = this._serviceBill.getOne(1);
     observableBringAll
       .subscribe(
         (data) => { // THEN TRY

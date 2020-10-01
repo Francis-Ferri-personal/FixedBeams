@@ -41,7 +41,21 @@ export class BillController {
             throw new InternalServerErrorException({message: "Server error"});
         }
     }
-    
+
+    @Get("user/:id")
+    @HttpCode(200)
+    async findBillsByUser(
+        @Param() pathParams
+    ){
+        const id = Number(pathParams.id);
+        try {
+            const response = await this.billService.findAllByUser(id);
+            return response;
+        } catch (error){
+            console.log(error);
+            throw new InternalServerErrorException({message: "Server error"});
+        }
+    }
 
     @Post()
     @HttpCode(201)

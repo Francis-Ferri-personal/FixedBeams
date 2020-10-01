@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import {AppRoutingModule} from "./app-routing.module";
 import { SearchComponent } from './components/search/search.component';
 import { MainbarComponent } from './components/shared/mainbar/mainbar.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -23,7 +22,7 @@ import { ProductComponent } from './components/product/product.component';
 import {BillService} from "./services/bill.service";
 import { FormBillComponent } from './components/form-bill/form-bill.component';
 import {BillDetailService} from "./services/bill-detail.service";
-import { FormsModule } from '@angular/forms';
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [

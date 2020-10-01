@@ -13,7 +13,7 @@ export class BillService {
       bill
     );
   }
-  getOne(){
-    return this._httpClient.get(this.url + '/bill');
+  getOne(id: number){
+    return this._httpClient.get(this.url + '/bill/user' + id);
   }
 }
