@@ -22,4 +22,10 @@ export class BillService {
         return this.repository.save(updatedBill);
     }
 
+    findAllByUser(id: number){
+        return this.repository.find({where: [
+            {user: {id: id}}
+        ]})
+    }
+
 }
