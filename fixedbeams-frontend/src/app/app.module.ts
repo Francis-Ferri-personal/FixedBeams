@@ -20,7 +20,9 @@ import { DomainService } from './services/domain.service';
 import { NavbarItemComponent } from './components/shared/navbar-item/navbar-item.component';
 import { ProductCardsComponent } from './components/product-cards/product-cards.component';
 import { ProductComponent } from './components/product/product.component';
-import { HomeComponent } from './components/home/home.component';
+import {BillService} from "./services/bill.service";
+import { FormBillComponent } from './components/form-bill/form-bill.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +40,7 @@ import { HomeComponent } from './components/home/home.component';
     NavbarItemComponent,
     ProductCardsComponent,
     ProductComponent,
-    HomeComponent,
+    FormBillComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ import { HomeComponent } from './components/home/home.component';
   ],
   providers: [
     CategoryService,
-    DomainService
+    DomainService,
+    BillService
   ],
   entryComponents: [
    MatDialogComponent

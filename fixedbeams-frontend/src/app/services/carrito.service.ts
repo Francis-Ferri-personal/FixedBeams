@@ -21,7 +21,7 @@ export class CarritoService {
   }
 
   guardarStorage(){
-    localStorage.setItem("productosCarrito",JSON.stringify(this.productosCarrito));
+    localStorage.setItem("productosCarrito" ,JSON.stringify(this.productosCarrito));
   }
 
   guardarProduco(producto: ProductCart){

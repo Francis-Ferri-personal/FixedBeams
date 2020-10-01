@@ -17,6 +17,7 @@ export class MainbarComponent implements OnInit {
   };
   initcar = document.getElementById('car');
   productlist = document.querySelector('#car-list');
+  products;
 
   constructor(
     private readonly _router: Router,
@@ -24,12 +25,12 @@ export class MainbarComponent implements OnInit {
     private readonly _matDialog: MatDialog,
     private readonly _serviceCar: CarritoService,
   ) {
-    this.insertCar();
+   // this.insertCar();
   }
 
 
   ngOnInit(): void {
-    // this.insertCar();
+     this.insertCar();
   }
 
   goChildren(route: string) {
@@ -54,6 +55,7 @@ export class MainbarComponent implements OnInit {
   }
 
   emptyCarAll() {
+    // storage.clear();
     while (this.productlist.firstChild){
       this.productlist.removeChild(this.productlist.firstChild);
     }
@@ -69,36 +71,7 @@ export class MainbarComponent implements OnInit {
     return courseLS;
   }
   insertCar(){
-    const product = this._serviceCar.getProductCar();
-    const row = document.createElement('tr');
-    row.innerHTML = `
-        <td>
-            <img src="${product.imagen}">
-        </td>
-        <td>
-            ${product.titulo}
-        </td>
-        <td>
-            ${product.precio}
-        </td>
-        <td>
-            <a href="#" class="borrar-curso" data-id="${product.id}" >X
-        </td>
-
-    `;
-    this.productlist.appendChild(row);
-    // guardarCursoLocalStorage(curso);
+    this.products = this._serviceCar.getProductCar();
+    console.log(this.products);
   }
-  // readData(product){
-  //   const infProcuct = {
-  //     imagen: product.querySelector('img').src,
-  //     titulo: product.querySelector('h4').textContent,
-  //     precio: product.querySelector('span').textContent,
-  //     id: product.querySelector('a').getAttribute('data-id')
-  //
-  //   };
-  //   console.log(infProcuct);
-  //   this.insertCar(infProcuct);
-  //
-  // }
 }
