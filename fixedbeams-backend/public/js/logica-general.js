@@ -44,3 +44,10 @@ function buscarProducto(id){
     window.location = urlBusqueda;
   }
 }
+
+function goToBill(){
+  alert("Bill")
+}
+function cleanCart(){
+  alert("Clean")
+}
