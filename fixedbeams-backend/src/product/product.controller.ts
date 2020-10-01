@@ -143,8 +143,41 @@ export class ProductController {
         }
     }
 
+    @Get("view/search")
+    async sendProductView(
+        @Query() queryParams,
+        @Res() res
+    ){
+        const searchProduct = queryParams.searchProduct;  
+        if(searchProduct){
+            try {
+                const searchProducts = await this.productService.findAllByQuery(searchProduct);
+                if(searchProducts){
+                    return res.render(
+                        "app/app-component", 
+                        {
+                            pagina: "product-cards",
+                            categoryName: searchProduct,
+                            categoryProducts: searchProducts.slice(0,4)
+                        }
+                    );
+                } else {
+                    return res.render(
+                        "app/app-component", 
+                        {pagina: "search", mensaje: "No se encontraron productos"}
+                    );
+                }
+            } catch (error) {
+                console.log(error);
+                throw new InternalServerErrorException("Server error");
+            }
+        } else{
+            throw new BadRequestException("Error en consulta");
+        }
+    }
+
     @Get("view/:id")
-    async sendDomainView(
+    async sendProductViewById(
         @Param() pathParams,
         @Req() req,
         @Res() res
