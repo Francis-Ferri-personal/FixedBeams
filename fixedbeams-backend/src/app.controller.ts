@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Res, Session} from '@nestjs/common';
+import {Body, Controller, Get, Post, Req, Res, Session} from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -11,37 +11,65 @@ export class AppController {
   ): string {
     return res.render("app/app-component");
   }
-  @Get("login")
+  @Get('login')
   login(
-      @Res() res
+      @Res() response
   ){
-    return res.render("login/login");
+    return response.render('login/login')
   }
-  @Post("login")
+  @Post('login')
   loginPost(
-      @Body() parametrosCuerpo,
-      @Res() res,
+      @Body() parametrosConsulta,
+      @Res() response,
       @Session() session
   ){
-    const autenticado = this.autenticarUsuario(parametrosCuerpo);
-    if(autenticado){
-      session.usuario = parametrosCuerpo.usuario;
-      return res.redirect("category/products");
-    } else {
-      return res.render(
-          "login/login",
-          {error: "Usuario o contraseña no coinciden"}
-      );
+    // validar los datos
+    const usuario = parametrosConsulta.usuario;
+    const password = parametrosConsulta.password;
+    if(usuario == 'Adrian' && password =='1234'){
+      session.usuario = usuario
+      session.roles = ['Administrador']
+      return response.redirect('account');
+
+    }else {
+      if(usuario == 'Pedro' && password =='4321'){
+        session.usuario = usuario
+        session.roles = ['Supervisor']
+        return response.redirect('account');
+      }else {
+        return response.redirect('/login')
+      }
+    }
+
+
+  }
+  @Get('account')
+  protegido(
+      @Res() response,
+      @Session() session
+  ){
+    const estaLogeado = session.usuario;
+    if (estaLogeado){
+      return response.render('login/account',{
+        usuario: session.usuario,
+        roles:session.roles
+      })
+    }else{
+      return response.redirect('/login')
     }
 
   }
-  autenticarUsuario(parametrosCuerpo):boolean{
-    const usuario = parametrosCuerpo.usuario;
-    const password = parametrosCuerpo.password;
-    if(usuario == "Adrian" && password == "1234"){
-      return true;
-    }
-    return false;
+  @Get('logout')
+  logout(
+      @Session()session,
+      @Res() response,
+      @Req() request
+  ){
+    session.username = undefined;
+    session.roles = undefined
+    request.session.destroy();
+    return response.redirect('login')
+
   }
 
 
