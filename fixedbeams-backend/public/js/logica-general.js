@@ -25,3 +25,16 @@ function guardarProducto(){
   alert("Se guardara el producto");
   window.location = `${urlBase}/product/${idProduct}/${contador}`;
 }
+
+buscarProducto(){
+  const urlBase = "http://localhost:3000";
+  const searchBox = document.getElementById("searchBox");
+  if(searchBox.value === undefined || searchBox.value === ""){
+    window.location = `${urlBase}`
+  } else {
+    // TODO: CRear el metodo de renderizar
+    const urlBusqueda = `${urlBase}+/product/view?searchProduct=${searchBox.value}`
+    window.location = urlBusqueda;
+  }
+  
+}
