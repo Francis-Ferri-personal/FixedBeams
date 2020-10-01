@@ -6,13 +6,68 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">  
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <div class="mr-auto"></div>
     <form class="form-inline my-2 my-lg-0">
+      <div class="btn-group">
+        <button  class="btn my-2 my-sm-0"
+                 type="button" href="car"
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded="false">
+          <img src="assets/img/mainbar/cart.png" width="50" height="50"/>
+
+        </button>
+        <div class="container">
+        <div class="dropdown-menu" id="car">
+          <table id="car-list">
+            <tr>
+              <th scope="col-md-6">Imagen</th>
+              <th scope="col-md-3">Nombre</th>
+              <th scope="col-md-3">Cantidad</th>
+              <th scope="col-md-3">Precio/U</th>
+            </tr>
+            <div class="dropdown-divider"></div>
+            <tr *ngFor="let product of products">
+              <td><img src="{{product.srcImage}}" height="150" alt="" loading="lazy"></td>
+<!--              <td>{{product.srcImage}}</td>-->
+              <td>
+                <h3>
+                  {{product.name}}
+                </h3>
+              </td>
+              <td>
+                <h3>
+                  {{product.quantity}}
+                </h3>
+              </td>
+              <td>
+                <h3>
+                  {{product.price}}
+                </h3>
+              </td>
+            </tr>
+          </table>
+          <div class="dropdown-divider"></div>
+          <button type="button" class="btn btn-warning btn-outline-dark align-content-center" (click)="goTo('bill')">
+            Adquirir Productos
+          </button>
+          <button type="button" class="btn btn-light btn-outline-dark align-content-center" (click)="emptyCarAll()"> Eliminar Compra </button>
+        </div>
+
+      </div>
+      </div>
+      <!-- <input id="searchBox" class="form-control mr-sm-" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn my-2 my-sm-0" type="button"><img src="assets/img/mainbar/search.png" width="50" height="50"/></button>
+      <button class="btn my-2 my-sm-0 textButton" type="button"><img src="assets/img/mainbar/map.png" width="35" height="35"/> Set your location </button>
+      <button class="btn my-2 my-sm-0" type="button"><img src="assets/img/mainbar/user.png" width="50" height="50"/></button> -->
+<!--      META <button  (click)="goChildren('car')" class="btn my-2 my-sm-0" type="button" href="car"><img src="assets/img/mainbar/cart.png" width="50" height="50"/></button>-->
+<!-- FRANCIS MASTER -->
       <input id="searchBox" class="form-control mr-sm-" type="text" placeholder="Search" aria-label="Search" [(ngModel)]="searchModel" name="searchProduct">
       <button (click)="buscarProducto()" class="btn my-2 my-sm-0" type="button"><img src="assets/img/mainbar/search.png" width="50" height="50"/></button>
       <button class="btn my-2 my-sm-0 textButton" type="button"><img src="assets/img/mainbar/user.png" width="40" height="40"/> User Name </button>
       <button class="btn my-2 my-sm-0" type="button"><img src="assets/img/mainbar/cart.png" width="50" height="50"/></button>
+
     </form>
   </div>
 </nav>

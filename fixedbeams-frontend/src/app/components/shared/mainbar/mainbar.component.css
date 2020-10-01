@@ -7,3 +7,10 @@
   #searchBox {
     border: 1px solid lightslategrey;
   }
+.dropdown-menu {
+  width: 400px !important;
+  background-color: #f9f9f9;
+}
+table td {
+  text-align: center;
+}

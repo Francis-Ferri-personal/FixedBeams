@@ -2,15 +2,15 @@
     <ul class="navbar-nav mr-auto">
         <li class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="">
-                <img src="assets/img/navbar/menu.png" width="50" height="50" alt=""> 
+                <img src="assets/img/navbar/menu.png" width="50" height="50" alt="">
             </a>
         </li>
-    
+
         <app-navbar-item [srcImage]="dominio.srcImage" [idDomain]="dominio.id" *ngFor="let dominio of listaDominios"></app-navbar-item>
-     
+
         <li class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="...">
-                <img src="assets/img/navbar/more.png" width="50" height="50" alt=""> 
+                <img src="assets/img/navbar/more.png" width="50" height="50" alt="">
             </a>
         </li>
     </ul>
