@@ -3,7 +3,6 @@ function disminuirCantidad(){
     if(Number(contador.innerHTML) > 0){
       contador.innerHTML = Number(contador.innerHTML) - 1;
     }
-
 }
 
 function aumentarCantidad(){
@@ -26,15 +25,22 @@ function guardarProducto(){
   window.location = `${urlBase}/product/${idProduct}/${contador}`;
 }
 
-buscarProducto(){
+
+function buscarDesdeSearch(){
+  buscarProducto("searchBox")
+}
+
+function buscarDesdeMainBar(){
+  buscarProducto("searchMainbar")
+}
+
+function buscarProducto(id){
   const urlBase = "http://localhost:3000";
-  const searchBox = document.getElementById("searchBox");
+  const searchBox = document.getElementById(id);
   if(searchBox.value === undefined || searchBox.value === ""){
     window.location = `${urlBase}`
   } else {
-    // TODO: CRear el metodo de renderizar
-    const urlBusqueda = `${urlBase}+/product/view?searchProduct=${searchBox.value}`
+    const urlBusqueda = `${urlBase}/product/view/search?searchProduct=${searchBox.value}`
     window.location = urlBusqueda;
   }
-  
 }
