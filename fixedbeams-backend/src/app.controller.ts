@@ -9,7 +9,7 @@ export class AppController {
   inicio(
     @Res() res
   ): string {
-    return res.render("app/app-component");
+    return res.render("app/app-component", {pagina: "search"});
   }  
     
 }
