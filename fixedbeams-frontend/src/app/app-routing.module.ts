@@ -9,7 +9,8 @@ export const routes: Routes = [
     {path: "", component: SearchComponent},
     {path: "domain/:id",component: CategoryCardComponent},
     {path: "category/:id", component: ProductCardsComponent},
-    {path: "product/:id", component: ProductComponent}
+    {path: "product/:id", component: ProductComponent},
+    {path: "products", component: ProductCardsComponent}
 ]
 
 @NgModule({

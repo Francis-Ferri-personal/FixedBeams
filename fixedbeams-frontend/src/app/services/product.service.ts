@@ -14,4 +14,8 @@ export class ProductService {
   getProduct(idProduct: number){
     return this._httpClient.get(this.url + "/" + idProduct);
   }
+
+  getSearchProducts(productoBuscar: string){    
+    return this._httpClient.get(this.url + "?productoBuscar=" + productoBuscar);
+  }
 }
