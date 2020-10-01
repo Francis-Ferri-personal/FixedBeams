@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
@@ -93,6 +94,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -128,6 +130,6 @@
   },
   "defaultProject": "fixedbeams-frontend",
   "cli": {
-    "analytics": "8ebbcee2-cfc1-4647-a3e6-cddb97da39a6"
+    "analytics": "324cc1c9-04d7-4107-a328-14ebd3db98bf"
   }
 }

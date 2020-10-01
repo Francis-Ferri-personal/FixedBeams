@@ -56,8 +56,6 @@ export class BillController {
             throw new InternalServerErrorException({message: "Server error"});
         }
     }
-    
-
     @Post()
     @HttpCode(201)
     async addBill(

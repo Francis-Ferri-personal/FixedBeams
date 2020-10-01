@@ -24,8 +24,8 @@ export class BillService {
 
     findAllByUser(id: number){
         return this.repository.find({where: [
-            {user: {id: id}}
-        ]})
+                {user: {id: id}}
+            ]})
     }
 
 }

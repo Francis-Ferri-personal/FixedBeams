@@ -1,0 +1,9 @@
+.textButton {
+  background-color: #FFBD3B; /* Green */
+  border: 1px solid black;
+  font-weight: 700;
+}
+
+#searchBox {
+  border: 1px solid lightslategrey;
+}

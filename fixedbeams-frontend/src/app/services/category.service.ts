@@ -5,8 +5,7 @@ import { IP_SERVER, PORT_SERVER } from '../config/constants';
 @Injectable()
 export class CategoryService {
 
-  url = `http://${IP_SERVER}:${PORT_SERVER}/category`
-  
+  url = `http://${IP_SERVER}:${PORT_SERVER}/category`;
   constructor(private readonly _httpClient: HttpClient) { }
 
   getCategoryProducts(idCategory: number){
