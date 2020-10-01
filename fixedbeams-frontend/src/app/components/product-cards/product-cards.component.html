@@ -1,6 +1,6 @@
-<h2 class="d-flex justify-content-center mt-3 my-3">Productos de {{categoryName}}</h2>
+<h2 class="d-flex justify-content-center mt-3 my-3">Productos de {{titulo}}</h2>
 <div class="card-deck d-flex justify-content-center mt-3 my-3">
-  <div class="card puntero fadeIn" style="width: 16rem;" *ngFor="let product of categoryProducts"> 
+  <div class="card puntero fadeIn" style="width: 16rem;" *ngFor="let product of productos"> 
     <img class="card-img-top" [src]="product.srcImage" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{product.name}}</h5>

@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavbarItemComponent } from './components/shared/navbar-item/navbar-item.component';
 import { ProductCardsComponent } from './components/product-cards/product-cards.component';
 import { ProductComponent } from './components/product/product.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ProductComponent } from './components/product/product.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     CategoryService,

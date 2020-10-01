@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, InternalServerErrorException, Post, Body, BadRequestException, Put, Res, Req } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, InternalServerErrorException, Post, Body, BadRequestException, Put, Res, Req, Query } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductCreateDto } from './dto/product.create.dto';
 import { ValidationError, validate } from 'class-validator';
@@ -13,6 +13,25 @@ export class ProductController {
     constructor(
         private readonly productService: ProductService
     ){}
+
+    @Get()
+    @HttpCode(200)
+    async findQueryProduct(
+        @Query() queryParams
+    ){
+        const productoBuscar = queryParams.productoBuscar;
+        if(productoBuscar){
+            try {
+                const response = await this.productService.findAllByQuery(productoBuscar);
+                return response;
+            } catch (error) {
+                console.log(error);
+                throw new InternalServerErrorException("Server error");
+            }
+        } else{
+            throw new BadRequestException("Error en consulta");
+        }
+    }
 
     @Get(":id")
     @HttpCode(200)
