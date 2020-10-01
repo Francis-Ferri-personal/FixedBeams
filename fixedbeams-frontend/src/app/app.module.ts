@@ -23,6 +23,7 @@ import { ProductComponent } from './components/product/product.component';
 import {BillService} from "./services/bill.service";
 import { FormBillComponent } from './components/form-bill/form-bill.component';
 import {BillDetailService} from "./services/bill-detail.service";
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import {BillDetailService} from "./services/bill-detail.service";
     MatDialogModule,
     MatCardModule,
     NgbModule,
+    FormsModule
   ],
   providers: [
     CategoryService,

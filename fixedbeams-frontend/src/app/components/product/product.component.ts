@@ -73,6 +73,7 @@ export class ProductComponent implements OnInit {
     };
     this._carritoService.guardarProduco(produtoCarrito);
     alert("Producto agregado");
+    this._router.navigate(["/"]);
   }
 
   cargarCantidadGuardada(){

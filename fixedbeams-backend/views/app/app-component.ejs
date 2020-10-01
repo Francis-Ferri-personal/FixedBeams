@@ -1,15 +1,11 @@
 <%- include("../shared/estilos-generales/estilos-generales-component")%>
 
-<% const pagina = "product" %> 
-
-
 <div class="row background" >
     <div class="col-sm-1">
         <%- include("../shared/navbar/navbar-component")%>
     </div>
     <div class="col-sm-11">
         <%- include("../shared/mainbar/mainbar-component")%>
-        <!-- TODO: Dependiendo de ruta un switch -->
         <%switch(pagina){
             case "search": %>
                 <%-include("../search/search-component") %>
@@ -23,7 +19,8 @@
             case "product": %>
                 <%-include("../product/product-component") %>
                 <% break;
-            %>
+            default: %>
+                <%-include("../search/search-component") %>
         <% } %>         
     </div>
 </div>

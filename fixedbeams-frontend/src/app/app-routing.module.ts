@@ -16,12 +16,11 @@ const routes: Routes = [
     component: RouteBillComponent,
     path: 'bill'
   },
-  {path: '', component: SearchComponent},
-  {path: 'domain/:id', component: CategoryCardComponent},
-  {path: 'category/:id', component: ProductCardsComponent},
-  {path: 'product/:id', component: ProductComponent},
-];
-
+    {path: "domain/:id",component: CategoryCardComponent},
+    {path: "category/:id", component: ProductCardsComponent},
+    {path: "product/:id", component: ProductComponent},
+    {path: "products", component: ProductCardsComponent},
+    {path: "", component: SearchComponent},
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

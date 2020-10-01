@@ -4,13 +4,13 @@ import {MatDialog} from '@angular/material/dialog';
 import {CarComponent} from '../../car/car.component';
 import {MatDialogComponent} from '../../../modals/mat-dialog/mat-dialog.component';
 import {CarritoService} from "../../../services/carrito.service";
-
 @Component({
   selector: 'app-mainbar',
   templateUrl: './mainbar.component.html',
   styleUrls: ['./mainbar.component.css']
 })
 export class MainbarComponent implements OnInit {
+
   carrito = {
     nombre: 'Roger',
     apellido: 'Guamushig',
@@ -27,12 +27,13 @@ export class MainbarComponent implements OnInit {
   ) {
    // this.insertCar();
   }
+  searchModel: string;
+
 
 
   ngOnInit(): void {
      this.insertCar();
   }
-
   goChildren(route: string) {
     // this._router.navigate(['/' , route]);
    // const routes = this._matDialog.open(CarComponent,{width : '660px' , data : {datosUsuario: this.carrito}});
@@ -73,5 +74,15 @@ export class MainbarComponent implements OnInit {
   insertCar(){
     this.products = this._serviceCar.getProductCar();
     console.log(this.products);
+  }
+  buscarProducto(){
+    if(this.searchModel === undefined || this.searchModel === ""){
+      this._router.navigate(["/"]);
+    } else {
+      let url = ["/products"];
+      const queryParams = {searchProduct: this.searchModel};
+      this._router.navigate(url,{queryParams});
+    }
+    
   }
 }
