@@ -7,6 +7,7 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { ProductCardsComponent } from './components/product-cards/product-cards.component';
 import { ProductComponent } from './components/product/product.component';
 import {SearchComponent} from "./components/search/search.component";
+import {LoginComponent} from "./components/login/login.component";
 const routes: Routes = [
     {
       component: CarComponent,
@@ -20,7 +21,11 @@ const routes: Routes = [
       {path: "category/:id", component: ProductCardsComponent},
       {path: "product/:id", component: ProductComponent},
       {path: "products", component: ProductCardsComponent},
-      {path: "", component: SearchComponent}
+      {path: "", component: SearchComponent},
+  {
+    component: LoginComponent,
+    path: 'login'
+  },
     ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

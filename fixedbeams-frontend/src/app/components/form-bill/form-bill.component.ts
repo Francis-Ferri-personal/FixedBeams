@@ -3,6 +3,7 @@ import {CarritoService} from "../../services/carrito.service";
 import {BillDetailService} from "../../services/bill-detail.service";
 import {Router} from "@angular/router";
 import {BillService} from "../../services/bill.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-form-bill',
@@ -17,20 +18,20 @@ export class FormBillComponent implements OnInit {
   paytypemodel: string;
   products;
   total = 0;
-  iduser = 1;
   billdetail;
   constructor(
     private readonly _serviceCar: CarritoService,
     private readonly _serviceBillDetail: BillDetailService,
     private readonly _route: Router,
-    private readonly _serviceBill: BillService
+    private readonly _serviceBill: BillService,
+    private readonly _serviceUser: UserService
   ) { }
 
   ngOnInit(): void {
     this.insertCart();
     this.totalProductos();
    // this.paytypemodel = this.inputpaytype;
-    console.log('FRANCIS NO ME SALEEEEE', this.paytypemodel);
+   //  console.log('FRANCIS NO ME SALEEEEE', this.paytypemodel);
   }
   insertCart() {
     this.products = this._serviceCar.getProductCar();
@@ -49,7 +50,17 @@ export class FormBillComponent implements OnInit {
       total: this.total,
       latitude: 50,
       longitude: 50,
-      idUser: this.iduser
+      idUser: this._serviceUser.usuario.id
     });
+  }
+
+  deleteAllBuy() {
+    this.products.forEach(
+      (producto) => {
+        this._serviceCar.borrarProducto(producto);
+      }, (e) => {
+        console.log('ERROR', e);
+      }
+    );
   }
 }
