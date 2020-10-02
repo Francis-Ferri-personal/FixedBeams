@@ -46,12 +46,36 @@ function buscarProducto(id){
 }
 
 function goToBill(){
-  alert("Bill")
+  const urlBase = "http://localhost:3000";
+  const urlBusqueda = `${urlBase}/bill/view/pay`
+  window.location = urlBusqueda;
 }
+
 function cleanCart(){
-  alert("Clean")
+  const urlBase = "http://localhost:3000";
+  const urlVaciarCarrito = `${urlBase}/product/view/borrar/carrito`
+  window.location = urlVaciarCarrito;
 }
 
 function createBill(){
-  alert("createBill")
+  const SelectPago = document.getElementById("exampleFormControlSelect1");
+  let total = document.getElementById("total");
+  total = Number(total.placeholder.slice(1));
+  /* const factura = {
+    "paymentType": SelectPago.value,
+    "total": total,
+    "latitude":50,
+    "longitude": 50,
+    "idUser": 1
+  }
+  fetch("http://localhost:3000/bill", {
+    method: "POST", 
+    body: JSON.parse(JSON.stringify(factura))
+  }).then(res => {
+    console.log("Request complete! response:", res);
+  }); */
+  alert("Registrando pago");
+  const urlBase = "http://localhost:3000";
+  const urlVaciarCarrito = `${urlBase}/product/view/borrar/carrito`
+  window.location = urlVaciarCarrito;
 }

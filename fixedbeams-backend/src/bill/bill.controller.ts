@@ -162,7 +162,13 @@ export class BillController {
         @Req() req,
     ){
         const productosCarrito = obtenerCarritoUsuario(req);
-        return res.render("app/app-component", {pagina: "form-bill"});
+        return res.render(
+            "app/app-component", 
+            {
+                pagina: "form-bill",
+                products: productosCarrito
+            }
+        );
     } 
 
 }

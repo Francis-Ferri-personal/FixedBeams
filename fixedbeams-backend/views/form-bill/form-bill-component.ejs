@@ -1,34 +1,14 @@
 <% 
-products = [
-    {
-        name: "Prueba",
-        quantity: 3,
-        price: 30,
-        srcImage :"https://storage.googleapis.com/fixedbeams-categories-images/cars/bulldozers.png"
-    },
-    {
-        name: "Prueba",
-        quantity: 3,
-        price: 30,
-        srcImage :"https://storage.googleapis.com/fixedbeams-categories-images/cars/bulldozers.png"
-    },
-    {
-        name: "Prueba",
-        quantity: 3,
-        price: 30,
-        srcImage :"https://storage.googleapis.com/fixedbeams-categories-images/cars/bulldozers.png"
-    },
-    {
-        name: "Prueba",
-        quantity: 3,
-        price: 30,
-        srcImage :"https://storage.googleapis.com/fixedbeams-categories-images/cars/bulldozers.png"
-    }
-];
-total = 0
+let total = 0
+if(typeof products === "undefined"){
+  products = [];
+} else {
+  products.forEach(product => {
+    total += (product.quantity * product.price)
+  })
+}
+%>
 
-
-%> 
 <div class="container">
     <form><!-- TODO: Hacer el Post -->
       <div class="row">
@@ -152,7 +132,7 @@ total = 0
               <input type="text" class="form-control" id="total" placeholder="$ <%= total + 5 %> " disabled>
             </div>
             <div class="dropdown-divider"></div>
-            <button type="submit" class="btn btn-warning" onclick="createBill()">Comprar</button>
+            <button type="button" class="btn btn-warning" onclick="createBill()">Comprar</button>
           </div>
         </div>
       </div>
