@@ -184,6 +184,18 @@ export class ProductController {
         }
     }
 
+    @Get("view/borrar/carrito")
+    inicio(
+        @Res() res,
+        @Req() req,
+    ){
+        const productosCarrito = [];
+        res.cookie(
+            "carrito", productosCarrito
+        );
+        return res.render("app/app-component", {pagina: "search", products: productosCarrito});
+    } 
+    
     @Get("view/:id")
     async sendProductViewById(
         @Param() pathParams,
