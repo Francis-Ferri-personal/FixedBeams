@@ -1,10 +1,11 @@
-import { Controller, Get, Param, InternalServerErrorException, Post, HttpCode, Body, BadRequestException, Put, Res } from '@nestjs/common';
+import { Controller, Get, Param, InternalServerErrorException, Post, HttpCode, Body, BadRequestException, Put, Res, Req } from '@nestjs/common';
 import { DomainService } from './domain.service';
 import { DomainCreateDto } from './dto/domain.create.dto';
 import { ValidationError, validate } from 'class-validator';
 import { DomainUpdaeDto } from './dto/domain.update.dto';
 import { DomainEntity } from './domain.entity';
 import { CategoryService } from '../category/category.service';
+import { obtenerCarritoUsuario } from '../shared/shared.functions';
 
 @Controller("domain")
 export class DomainController {
@@ -114,20 +115,30 @@ export class DomainController {
     @Get("view/:id")
     async sendDomainView(
         @Param() pathParams,
-        @Res() res
+        @Res() res,
+        @Req() req
     ){
+        const productosCarrito = obtenerCarritoUsuario(req);
         const id = Number(pathParams.id);
         try {
             const domainCategories = await this.categoryService.findAllByDomain(id);
             if(domainCategories){
                 return res.render(
                     "app/app-component", 
-                    {pagina: "category-cards", domainCategories: domainCategories}
+                    {
+                        pagina: "category-cards", 
+                        domainCategories: domainCategories,
+                        products: productosCarrito
+                    }
                 );
             } else {
                 return res.render(
                     "app/app-component", 
-                    {pagina: "search", mensaje: "Categorias no encontradas"}
+                    {
+                        pagina: "search", 
+                        mensaje: "Categorias no encontradas",
+                        products: productosCarrito
+                    }
                 );
             }
         } catch (error) {
