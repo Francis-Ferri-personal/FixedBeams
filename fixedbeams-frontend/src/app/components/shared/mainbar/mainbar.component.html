@@ -8,6 +8,16 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <div class="mr-auto"></div>
+    <div *ngIf="_serviceUser.usuario != undefined">
+    <button (click)="goTo('buys')"
+            id="buy"
+            class="btn my-2 my-sm-0"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false">
+      <img src="../../../../assets/img/btn/compra.jpg" height="50" width="50"/>
+    </button>
+    </div>
     <form class="form-inline my-2 my-lg-0">
       <div class="btn-group">
         <button  class="btn my-2 my-sm-0"
@@ -81,6 +91,7 @@
       <button class="btn my-2 my-sm-0" type="button"><img src="assets/img/mainbar/user.png" width="50" height="50"/></button> -->
 <!--      META <button  (click)="goChildren('car')" class="btn my-2 my-sm-0" type="button" href="car"><img src="assets/img/mainbar/cart.png" width="50" height="50"/></button>-->
 <!-- FRANCIS MASTER -->
+
       <input id="searchBox" class="form-control mr-sm-" type="text" placeholder="Search" aria-label="Search" [(ngModel)]="searchModel" name="searchProduct">
       <button (click)="buscarProducto()" class="btn my-2 my-sm-0" type="button"><img src="assets/img/mainbar/search.png" width="50" height="50"/></button>
 

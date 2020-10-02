@@ -60,6 +60,10 @@ export class MainbarComponent implements OnInit {
       const nav = ['/login'];
       this._router.navigate(nav);
     }
+    if (route === 'buys'){
+      const nav = ['/buys'];
+      this._router.navigate(nav);
+    }
   }
 
   emptyCarAll() {

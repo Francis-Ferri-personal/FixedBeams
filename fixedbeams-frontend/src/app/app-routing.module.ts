@@ -8,6 +8,7 @@ import { ProductCardsComponent } from './components/product-cards/product-cards.
 import { ProductComponent } from './components/product/product.component';
 import {SearchComponent} from "./components/search/search.component";
 import {LoginComponent} from "./components/login/login.component";
+import {BuyComponent} from "./components/buy/buy.component";
 const routes: Routes = [
     {
       component: CarComponent,
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     component: LoginComponent,
     path: 'login'
+  },
+  {
+    component: BuyComponent,
+    path: 'buys'
   },
     ];
 @NgModule({

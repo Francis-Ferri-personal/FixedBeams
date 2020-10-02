@@ -48,8 +48,8 @@ export class FormBillComponent implements OnInit {
     this.informationValitate.emit({
       paymentType: this.paytypemodel,
       total: this.total,
-      latitude: 50,
-      longitude: 50,
+      latitude: Math.round(Math.random() * 50),
+      longitude: Math.round(Math.random() * 50),
       idUser: this._serviceUser.usuario.id
     });
   }

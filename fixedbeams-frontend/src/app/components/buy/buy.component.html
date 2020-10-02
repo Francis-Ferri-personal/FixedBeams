@@ -1,0 +1,34 @@
+<div class="container">
+<!--    <h2 class="text-warning bg-white col-md-2 border-dark">Tus Compras</h2>-->
+
+  <img src="../../../assets/img/bill/compras.JPG" height="50" width=""/></div>
+
+<br>
+<div class="container">
+  <!-- Content here -->
+
+  <table class="table table-striped table-light " >
+    <thead class="" >
+    <tr>
+      <th scope="col">#Factura</th>
+      <th scope="col">Tipo de pago</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Total</th>
+<!--      <th scope="col">Detalles</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="tr-light" *ngFor="let buy of buys">
+      <td>{{buy.id}}</td>
+      <td>{{buy.paymentType}}</td>
+      <td>{{buy.dateTime}}</td>
+      <td>{{buy.total}}</td>
+<!--      <td>-->
+<!--        <button type="button" class="btn btn-primary">-->
+<!--          Detalles-->
+<!--        </button>-->
+<!--      </td>-->
+    </tr>
+    </tbody>
+  </table>
+</div>
