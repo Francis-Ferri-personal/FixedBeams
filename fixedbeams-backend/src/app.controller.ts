@@ -1,3 +1,4 @@
+
 import {
   BadRequestException,
   Body,
@@ -14,6 +15,8 @@ import {
 import { AppService } from './app.service';
 import {UserLoginDto} from "./user/dto/user.login-dto";
 import {validate, ValidationError} from "class-validator";
+import { obtenerCarritoUsuario } from './shared/shared.functions';
+
 
 @Controller()
 export class AppController {
@@ -21,17 +24,17 @@ export class AppController {
 
   @Get()
   inicio(
-    @Res() res
-  ): string {
-    return res.render("app/app-component");
+    @Res() res,
+    @Req() req
+  ){
+    const productosCarrito = obtenerCarritoUsuario(req);
+    return res.render("app/app-component", {pagina: "search", products: productosCarrito});
   }
+  
   @Get('login')
   loginn(
       @Res() response
   ){
     return response.render('login/login')
   }
-
-
-
 }

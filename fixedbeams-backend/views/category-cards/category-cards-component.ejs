@@ -1,41 +1,3 @@
-
-<!-- TODO: Eliminar esto solo para pruebas -->
-<% 
-
-const domainCategories = [
-    {
-        id: 13,
-        name: "carpenters",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        srcImage: "https://storage.googleapis.com/fixedbeams-categories-images/teams/carpenters.png"
-    },
-    {
-        id: 14,
-        name: "electricians",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        srcImage: "https://storage.googleapis.com/fixedbeams-categories-images/teams/electricians.png"
-    },
-    {
-        id: 15,
-        name: "masons",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        srcImage: "https://storage.googleapis.com/fixedbeams-categories-images/teams/masons.png"
-    },
-    {
-        id: 16,
-        name: "plumbers",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        srcImage: "https://storage.googleapis.com/fixedbeams-categories-images/teams/plumbers.png"
-    }
-]
-%> 
-<% 
-function gato(params) {
-    console.log("gato");
-}
-
-%> 
-
 <%-include("../search/search-component") %>
 <div class="card-deck d-flex justify-content-center">
     <% domainCategories.forEach((category) => { %>
@@ -44,7 +6,7 @@ function gato(params) {
         <div class="card-body">
         <h5 class="card-title"><%= category.name %></h5>
         <p class="card-text"><%= category.description %></p>
-        <a href="#" class="btn btn-success">Ver categoria</a>
+        <a href="/category/view/<%= category.id %> " class="btn btn-success">Ver categoria</a>
         </div>
     </div>
     <% }) %>    

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Product } from 'src/app/models/product.model';
+import { Product, ProductCart } from 'src/app/models/product.model';
 import { ProductService } from '../../services/product.service';
 import { CarritoService } from '../../services/carrito.service';
 
@@ -19,7 +19,7 @@ export class ProductComponent implements OnInit {
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _carritoService: CarritoService,
     private readonly _router: Router
-  ) { 
+  ) {
     this.cantidad = 0;
     const obsRuta = this._activatedRoute.params;
     obsRuta.subscribe(
@@ -45,7 +45,7 @@ export class ProductComponent implements OnInit {
       (error) => {
         console.log(error);
       }
-    )
+    );
   }
   aumentarCantidad(){
     if(this.cantidad < this.product.stock){
@@ -58,15 +58,22 @@ export class ProductComponent implements OnInit {
       this.cantidad -= 1;
     }
   }
-  
+
   guardarProducto(){
     if (this.cantidad === 0){
       this._carritoService.borrarProducto(this.product);
       return;
     }
-    const produtoCarrito = {id: this.product.id, cantidad: this.cantidad};
+    const produtoCarrito: ProductCart = {
+      id: this.product.id, 
+      name: this.product.name, 
+      price: this.product.price, 
+      quantity: this.cantidad,
+      srcImage: this.product.srcImage
+    };
     this._carritoService.guardarProduco(produtoCarrito);
     alert("Producto agregado");
+    this._router.navigate(["/"]);
   }
 
   cargarCantidadGuardada(){

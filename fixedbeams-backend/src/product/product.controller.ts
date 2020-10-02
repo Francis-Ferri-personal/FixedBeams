@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, InternalServerErrorException, Post, Body, BadRequestException, Put } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, InternalServerErrorException, Post, Body, BadRequestException, Put, Res, Req, Query } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductCreateDto } from './dto/product.create.dto';
 import { ValidationError, validate } from 'class-validator';
@@ -6,6 +6,7 @@ import { ProductEntity } from './product.entity';
 import { CategoryEntity } from '../category/category.entity';
 import { FactoryEntity } from 'src/factory/factory.entity';
 import { ProductUpdateDto } from './dto/product.update.dto';
+import { obtenerCarritoUsuario } from '../shared/shared.functions';
 
 
 @Controller("product")
@@ -13,6 +14,25 @@ export class ProductController {
     constructor(
         private readonly productService: ProductService
     ){}
+
+    @Get()
+    @HttpCode(200)
+    async findQueryProduct(
+        @Query() queryParams
+    ){
+        const productoBuscar = queryParams.productoBuscar;
+        if(productoBuscar){
+            try {
+                const response = await this.productService.findAllByQuery(productoBuscar);
+                return response;
+            } catch (error) {
+                console.log(error);
+                throw new InternalServerErrorException("Server error");
+            }
+        } else{
+            throw new BadRequestException("Error en consulta");
+        }
+    }
 
     @Get(":id")
     @HttpCode(200)
@@ -123,4 +143,176 @@ export class ProductController {
             throw new InternalServerErrorException("Server error")
         }
     }
+
+    @Get("view/search")
+    async sendProductView(
+        @Query() queryParams,
+        @Res() res,
+        @Req() req
+    ){
+        const productosCarrito = obtenerCarritoUsuario(req);
+        const searchProduct = queryParams.searchProduct;  
+        if(searchProduct){
+            try {
+                const searchProducts = await this.productService.findAllByQuery(searchProduct);
+                if(searchProducts){
+                    return res.render(
+                        "app/app-component", 
+                        {
+                            pagina: "product-cards",
+                            categoryName: searchProduct,
+                            categoryProducts: searchProducts.slice(0,4),
+                            products: productosCarrito
+                        }
+                    );
+                } else {
+                    return res.render(
+                        "app/app-component", 
+                        {
+                            pagina: "search", 
+                            mensaje: "No se encontraron productos",
+                            products: productosCarrito
+                        }
+                    );
+                }
+            } catch (error) {
+                console.log(error);
+                throw new InternalServerErrorException("Server error");
+            }
+        } else{
+            throw new BadRequestException("Error en consulta");
+        }
+    }
+
+    @Get("view/borrar/carrito")
+    inicio(
+        @Res() res,
+        @Req() req,
+    ){
+        const productosCarrito = [];
+        res.cookie(
+            "carrito", productosCarrito
+        );
+        return res.render("app/app-component", {pagina: "search", products: productosCarrito});
+    } 
+    
+    @Get("view/:id")
+    async sendProductViewById(
+        @Param() pathParams,
+        @Req() req,
+        @Res() res
+    ){
+        let cantidad = 0;
+        let productosCarrito = req.cookies.carrito;
+        const id = Number(pathParams.id);
+        try {
+            const product = await this.productService.findOne(id);
+            if(product){
+                if(productosCarrito){
+                    let productoExistente = productosCarrito.find((productoCarrito) => productoCarrito.id == product.id);
+                    if(productoExistente){
+                        cantidad = productoExistente.quantity;
+                    }
+                }
+                return res.render(
+                    "app/app-component", 
+                    {
+                        pagina: "product", 
+                        product: product, 
+                        cantidad: cantidad,
+                        products: productosCarrito
+                    }
+                );
+            } else {
+                return res.render(
+                    "app/app-component", 
+                    {
+                        pagina: "search", 
+                        mensaje: "Producto no encontrado",
+                        products: productosCarrito
+                    }
+                );
+            }
+        } catch (error) {
+            console.log(error);
+            throw new BadRequestException("Internal Server Error");
+        }
+    }
+
+    @Get("/:id/:cantidad")
+    async guardarEnCarrito(
+        @Param() pathParams,
+        @Res() res,
+        @Req() req
+    ){
+        let productosCarrito = req.cookies.carrito;
+        
+        if(!productosCarrito){
+            productosCarrito = [];    
+        }
+        const id = Number(pathParams.id);
+        const cantidad = Number(pathParams.cantidad);
+        if(id == NaN || cantidad === NaN){
+            return res.render(
+                "app/app-component", 
+                {
+                    pagina: "search", 
+                    mensaje: "Error en guardar producto",
+                    products: productosCarrito
+                }
+            );
+        }
+        try {
+            const product: ProductEntity = await this.productService.findOne(id);
+            if (product){
+                const productoAgregado = {
+                    id: id,
+                    name: product.name,
+                    price: product.price,
+                    srcImage: product.srcImage,
+                    quantity: cantidad 
+                };
+                productosCarrito = this.guardarProducto(productoAgregado, productosCarrito);
+                res.cookie(
+                    "carrito", productosCarrito
+                );
+                return res.render(
+                    "app/app-component", 
+                    {
+                        pagina: "search", 
+                        products: productosCarrito
+                    }
+                );
+            } else {
+                return res.render(
+                    "app/app-component", 
+                    {
+                        pagina: "search", 
+                        mensaje: "Error producto no existe",
+                        products: productosCarrito
+                    }
+                );
+            }
+
+        } catch (error) {
+            console.log(error);
+            throw new BadRequestException("Internal Server Error");
+        }
+    }
+
+
+    guardarProducto(producto, productosCarrito){
+        let productoExistente = productosCarrito.find((productoCarrito) => productoCarrito.id == producto.id);
+        if(productoExistente){
+            if(producto.quantity <= 0){
+                const index = productosCarrito.indexOf(productoExistente);
+                productosCarrito.splice(index, 1);
+            } else {
+                productoExistente.quantity = producto.quantity;
+            }
+        } else {
+          productosCarrito.push(producto);
+        }
+        return productosCarrito;
+      }
 }

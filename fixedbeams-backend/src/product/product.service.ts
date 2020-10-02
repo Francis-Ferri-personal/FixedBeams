@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './product.entity';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Like, Repository } from 'typeorm';
 
 @Injectable()
 export class ProductService {
@@ -26,5 +26,12 @@ export class ProductService {
         return this.repository.find({where: [
             {category: id}
         ]})
+    }
+
+    findAllByQuery(queryText: String){
+        const consulta: FindManyOptions<ProductEntity> = {
+            where: [{name: Like(`%${queryText}%`) }]
+        }
+        return this.repository.find(consulta);
     }
 }

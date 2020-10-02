@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, InternalServerErrorException, Post, Body, BadRequestException, ParseIntPipe, Put } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, InternalServerErrorException, Post, Body, BadRequestException, ParseIntPipe, Put, Res, Req } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CategoryCreateDto } from './dto/category.create.dto';
 import { ValidationError, validate } from 'class-validator';
@@ -6,6 +6,7 @@ import { CategoryEntity } from './category.entity';
 import { DomainEntity } from 'src/domain/domain.entity';
 import { CategoryUpdateDto } from './dto/category.update.dto';
 import { ProductService } from '../product/product.service';
+import { obtenerCarritoUsuario } from '../shared/shared.functions';
 
 
 @Controller("category")
@@ -104,12 +105,55 @@ export class CategoryController {
     @Get("products/:id")
     @HttpCode(200)
     async findCategoryProducts(
-        @Param() pathParam
+        @Param() pathParams
     ){
-        const id = Number(pathParam.id);
+        const id = Number(pathParams.id);
         try {
             const response = await this.productService.findAllByCategory(id);
             return response;
+        } catch (error) {
+            console.log(error);
+            throw new InternalServerErrorException("Internal Server error");
+        }
+    }
+
+    @Get("view/:id")
+    async sendCategoryView(
+        @Param() pathParams,
+        @Res() res,
+        @Req() req
+    ){
+        const productosCarrito = obtenerCarritoUsuario(req);
+        const id = Number(pathParams.id);
+        try {
+            const category: CategoryEntity = await this.categoryService.findOne(id);
+            const categoryName = category.name;
+            const categoryProducts = await this.productService.findAllByCategory(id);
+            if(categoryProducts && categoryName){
+                return res.render(
+                    "app/app-component", 
+                    {
+                        pagina: "product-cards",
+                        categoryName: categoryName,
+                        categoryProducts: categoryProducts,
+                        products: productosCarrito
+                    }
+                );
+            } else if (!categoryName) {
+                return res.render(
+                    "app/app-component", 
+                    {
+                        pagina: "search", 
+                        mensaje: "Categoria no encontrada", 
+                        products: productosCarrito
+                    }
+                );
+            } else if (!categoryProducts) {
+                return res.render(
+                    "app/app-component", 
+                    {pagina: "search", mensaje: "Productos no encontrados"}
+                );
+            }
         } catch (error) {
             console.log(error);
             throw new InternalServerErrorException("Internal Server error");

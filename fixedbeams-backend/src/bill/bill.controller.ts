@@ -1,4 +1,4 @@
-import { Controller, Post, HttpCode, Get, Res, Param, Headers, InternalServerErrorException, Body, BadRequestException, Put } from '@nestjs/common';
+import { Controller, Post, HttpCode, Get, Res, Param, Headers, InternalServerErrorException, Body, BadRequestException, Put, Req } from '@nestjs/common';
 import { BillService } from './bill.service';
 import { BillCreateDto } from './dto/bill.create.dto';
 import { ValidationError, validate } from 'class-validator';
@@ -11,6 +11,7 @@ import { getManager } from 'typeorm';
 import { BillDetailEntity } from '../bill-detail/bill-detail.entity';
 import { ProductService } from '../product/product.service';
 import { ProductEntity } from 'src/product/product.entity';
+import { obtenerCarritoUsuario } from 'src/shared/shared.functions';
 
 
 
@@ -41,8 +42,21 @@ export class BillController {
             throw new InternalServerErrorException({message: "Server error"});
         }
     }
-    
 
+    @Get("user/:id")
+    @HttpCode(200)
+    async findBillsByUser(
+        @Param() pathParams
+    ){
+        const id = Number(pathParams.id);
+        try {
+            const response = await this.billService.findAllByUser(id);
+            return response;
+        } catch (error){
+            console.log(error);
+            throw new InternalServerErrorException({message: "Server error"});
+        }
+    }
     @Post()
     @HttpCode(201)
     async addBill(
@@ -141,5 +155,20 @@ export class BillController {
             throw new InternalServerErrorException("Server error");
         }
     }
+
+    @Get("view/pay")
+    sendViewBill(
+        @Res() res,
+        @Req() req,
+    ){
+        const productosCarrito = obtenerCarritoUsuario(req);
+        return res.render(
+            "app/app-component", 
+            {
+                pagina: "form-bill",
+                products: productosCarrito
+            }
+        );
+    } 
 
 }
