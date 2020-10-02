@@ -123,6 +123,7 @@ export class CategoryController {
         @Res() res,
         @Req() req
     ){
+        const user = req.cookies.user;
         const productosCarrito = obtenerCarritoUsuario(req);
         const id = Number(pathParams.id);
         try {
@@ -136,7 +137,8 @@ export class CategoryController {
                         pagina: "product-cards",
                         categoryName: categoryName,
                         categoryProducts: categoryProducts,
-                        products: productosCarrito
+                        products: productosCarrito,
+                        user: user
                     }
                 );
             } else if (!categoryName) {
@@ -145,13 +147,18 @@ export class CategoryController {
                     {
                         pagina: "search", 
                         mensaje: "Categoria no encontrada", 
-                        products: productosCarrito
+                        products: productosCarrito,
+                        user: user
                     }
                 );
             } else if (!categoryProducts) {
                 return res.render(
                     "app/app-component", 
-                    {pagina: "search", mensaje: "Productos no encontrados"}
+                    {
+                        pagina: "search", 
+                        mensaje: "Productos no encontrados",
+                        user: user
+                    }
                 );
             }
         } catch (error) {

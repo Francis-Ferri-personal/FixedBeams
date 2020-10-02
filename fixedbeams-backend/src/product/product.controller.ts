@@ -150,6 +150,7 @@ export class ProductController {
         @Res() res,
         @Req() req
     ){
+        const user = req.cookies.user;
         const productosCarrito = obtenerCarritoUsuario(req);
         const searchProduct = queryParams.searchProduct;  
         if(searchProduct){
@@ -162,7 +163,8 @@ export class ProductController {
                             pagina: "product-cards",
                             categoryName: searchProduct,
                             categoryProducts: searchProducts.slice(0,4),
-                            products: productosCarrito
+                            products: productosCarrito,
+                            user: user
                         }
                     );
                 } else {
@@ -171,7 +173,8 @@ export class ProductController {
                         {
                             pagina: "search", 
                             mensaje: "No se encontraron productos",
-                            products: productosCarrito
+                            products: productosCarrito,
+                            user: user
                         }
                     );
                 }
@@ -189,11 +192,17 @@ export class ProductController {
         @Res() res,
         @Req() req,
     ){
+        const user = req.cookies.user;
         const productosCarrito = [];
-        res.cookie(
-            "carrito", productosCarrito
+        res.cookie("carrito", productosCarrito);
+        return res.render(
+            "app/app-component", 
+            {
+                pagina: "search", 
+                products: productosCarrito, 
+                user: user
+            }
         );
-        return res.render("app/app-component", {pagina: "search", products: productosCarrito});
     } 
     
     @Get("view/:id")
@@ -202,6 +211,7 @@ export class ProductController {
         @Req() req,
         @Res() res
     ){
+        const user = req.cookies.user;
         let cantidad = 0;
         let productosCarrito = req.cookies.carrito;
         const id = Number(pathParams.id);
@@ -220,7 +230,8 @@ export class ProductController {
                         pagina: "product", 
                         product: product, 
                         cantidad: cantidad,
-                        products: productosCarrito
+                        products: productosCarrito,
+                        user: user
                     }
                 );
             } else {
@@ -229,7 +240,8 @@ export class ProductController {
                     {
                         pagina: "search", 
                         mensaje: "Producto no encontrado",
-                        products: productosCarrito
+                        products: productosCarrito,
+                        user: user
                     }
                 );
             }
@@ -245,6 +257,7 @@ export class ProductController {
         @Res() res,
         @Req() req
     ){
+        const user = req.cookies.user;
         let productosCarrito = req.cookies.carrito;
         
         if(!productosCarrito){
@@ -258,7 +271,8 @@ export class ProductController {
                 {
                     pagina: "search", 
                     mensaje: "Error en guardar producto",
-                    products: productosCarrito
+                    products: productosCarrito,
+                    user: user
                 }
             );
         }
@@ -270,7 +284,8 @@ export class ProductController {
                     name: product.name,
                     price: product.price,
                     srcImage: product.srcImage,
-                    quantity: cantidad 
+                    quantity: cantidad,
+                    user: user
                 };
                 productosCarrito = this.guardarProducto(productoAgregado, productosCarrito);
                 res.cookie(
@@ -280,7 +295,8 @@ export class ProductController {
                     "app/app-component", 
                     {
                         pagina: "search", 
-                        products: productosCarrito
+                        products: productosCarrito,
+                        user: user
                     }
                 );
             } else {
@@ -289,7 +305,8 @@ export class ProductController {
                     {
                         pagina: "search", 
                         mensaje: "Error producto no existe",
-                        products: productosCarrito
+                        products: productosCarrito,
+                        user: user
                     }
                 );
             }

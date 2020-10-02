@@ -1,20 +1,6 @@
 
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Get,
-  Headers,
-  HttpCode,
-  Post,
-  Query,
-  Req,
-  Res,
-  Session
-} from '@nestjs/common';
+import {Controller, Get, Req, Res} from '@nestjs/common';
 import { AppService } from './app.service';
-import {UserLoginDto} from "./user/dto/user.login-dto";
-import {validate, ValidationError} from "class-validator";
 import { obtenerCarritoUsuario } from './shared/shared.functions';
 
 
@@ -27,24 +13,37 @@ export class AppController {
     @Res() res,
     @Req() req
   ){
+    const user = req.cookies.user;
     const productosCarrito = obtenerCarritoUsuario(req);
-    return res.render("app/app-component", {pagina: "search", products: productosCarrito});
+    return res.render(
+      "app/app-component", 
+      {
+        pagina: "search", 
+        products: productosCarrito,
+        user: user
+      }
+    );
   }
-  
+
   @Get('login')
   login(
       @Res() response
   ){
     return response.render('login/login')
   }
+  
+}
+
+/*
   @Post("login")
-  loginPost(
+  async loginPost(
       @Body() parametrosCuerpo,
       @Res() res,
 
   ){
-    const autenticado = this.autenticarUsuario(parametrosCuerpo);
-    if(autenticado){
+
+    const usuario = this.autenticarUsuario(parametrosCuerpo);
+    if(usuario){
       return res.redirect("domain/categories/1");
     } else {
       return res.render(
@@ -53,6 +52,7 @@ export class AppController {
       );
     }
   }
+
   autenticarUsuario(parametrosCuerpo): boolean{
     const email = parametrosCuerpo.email;
     const password = parametrosCuerpo.password;
@@ -61,4 +61,4 @@ export class AppController {
     }
     return false;
   }
-}
+*/
