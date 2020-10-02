@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {BillService} from "../../services/bill.service";
 import {BillDetailService} from "../../services/bill-detail.service";
 import {observable} from "rxjs";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-route-bill',
@@ -21,13 +22,14 @@ export class RouteBillComponent implements OnInit {
     private readonly _serviceCar : CarritoService,
     private readonly _serviceBill: BillService,
     private readonly _route: Router,
-    private readonly _serviceBillDetail: BillDetailService
+    private readonly _serviceBillDetail: BillDetailService,
   ) { }
 
   ngOnInit(): void {
     this.insertCart();
   }
   createBill(bill) {
+      console.log('FACTURAAAAA', bill)
     const observableCreate = this._serviceBill.create(bill);
     observableCreate.subscribe(
       (data) => {

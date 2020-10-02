@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {CarComponent} from '../../car/car.component';
 import {MatDialogComponent} from '../../../modals/mat-dialog/mat-dialog.component';
 import {CarritoService} from "../../../services/carrito.service";
+import {LoginComponent} from "../../login/login.component";
+import {UserService} from "../../../services/user.service";
 @Component({
   selector: 'app-mainbar',
   templateUrl: './mainbar.component.html',
   styleUrls: ['./mainbar.component.css']
 })
 export class MainbarComponent implements OnInit {
-
   carrito = {
     nombre: 'Roger',
     apellido: 'Guamushig',
   };
   initcar = document.getElementById('car');
-  productlist = document.querySelector('#car-list');
+  //productlist = document.querySelector('#car-list');
   products;
 
   constructor(
@@ -24,6 +25,7 @@ export class MainbarComponent implements OnInit {
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _matDialog: MatDialog,
     private readonly _serviceCar: CarritoService,
+    public readonly _serviceUser: UserService
   ) {
    // this.insertCar();
   }
@@ -32,7 +34,8 @@ export class MainbarComponent implements OnInit {
 
 
   ngOnInit(): void {
-     this.insertCar();
+    this.insertCar();
+     //this.getUser();
   }
   goChildren(route: string) {
     // this._router.navigate(['/' , route]);
@@ -53,14 +56,21 @@ export class MainbarComponent implements OnInit {
       const nav = ['bill'];
       this._router.navigate(nav);
     }
+    if (route === 'login'){
+      const nav = ['/login'];
+      this._router.navigate(nav);
+    }
   }
 
   emptyCarAll() {
     // storage.clear();
-    while (this.productlist.firstChild){
-      this.productlist.removeChild(this.productlist.firstChild);
-    }
-    return false;
+    this.products.forEach(
+      (producto) => {
+        this._serviceCar.borrarProducto(producto);
+      }, (e) => {
+        console.log('ERROR', e);
+      }
+    );
   }
   getProductStorage(){
     let courseLS;
@@ -83,6 +93,20 @@ export class MainbarComponent implements OnInit {
       const queryParams = {searchProduct: this.searchModel};
       this._router.navigate(url,{queryParams});
     }
-    
+
+  }
+  getUser(){
+    // this.userl.emitEvent
+    //   .subscribe(
+    //     res =>
+    //     {
+    //       console.log("Atributo:" + res);
+    //       this.childTwo.dataShared = res;
+    //     }
+    //   );
+  }
+
+  eliminarOne(product) {
+    this._serviceCar.borrarProducto(product);
   }
 }
