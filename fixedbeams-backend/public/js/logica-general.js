@@ -51,3 +51,7 @@ function goToBill(){
 function cleanCart(){
   alert("Clean")
 }
+
+function createBill(){
+  alert("createBill")
+}
