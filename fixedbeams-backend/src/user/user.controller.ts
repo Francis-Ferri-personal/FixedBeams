@@ -1,4 +1,4 @@
-import { Controller, Post, HttpCode, Body, BadRequestException, Res, Put, Headers, Param } from '@nestjs/common';
+import {Controller, Post, HttpCode, Body, BadRequestException, Res, Put, Headers, Param, Get} from '@nestjs/common';
 
 import { UserCreateDto } from './dto/user.create-dto';
 import { UserUpdateDto } from './dto/user.update-dto';
@@ -12,6 +12,13 @@ import { RolEntity } from '../rol/rol.entity';
 @Controller("user")
 export class UserController {
     constructor(private readonly userService: UserService){}
+
+    @Get('login')
+    loginN(
+        @Res() response
+    ){
+        return response.render('login/login')
+    }
     
     @Post("login")
     @HttpCode(200)
