@@ -79,3 +79,8 @@ function createBill(){
   const urlVaciarCarrito = `${urlBase}/product/view/borrar/carrito`
   window.location = urlVaciarCarrito;
 }
+
+function irALogin(){
+  const url = "http://localhost:3000/login";
+  window.location = url;
+}

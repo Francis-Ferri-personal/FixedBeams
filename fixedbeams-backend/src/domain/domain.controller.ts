@@ -118,6 +118,7 @@ export class DomainController {
         @Res() res,
         @Req() req
     ){
+        const user = req.cookies.user;
         const productosCarrito = obtenerCarritoUsuario(req);
         const id = Number(pathParams.id);
         try {
@@ -128,7 +129,8 @@ export class DomainController {
                     {
                         pagina: "category-cards", 
                         domainCategories: domainCategories,
-                        products: productosCarrito
+                        products: productosCarrito,
+                        user: user
                     }
                 );
             } else {
@@ -137,7 +139,8 @@ export class DomainController {
                     {
                         pagina: "search", 
                         mensaje: "Categorias no encontradas",
-                        products: productosCarrito
+                        products: productosCarrito,
+                        user: user
                     }
                 );
             }

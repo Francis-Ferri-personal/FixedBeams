@@ -1,4 +1,4 @@
-import { Controller, Post, HttpCode, Body, BadRequestException, Res, Put, Headers, Param } from '@nestjs/common';
+import {Controller, Post, HttpCode, Body, BadRequestException, Res, Put, Headers, Param, Get, Req} from '@nestjs/common';
 
 import { UserCreateDto } from './dto/user.create-dto';
 import { UserUpdateDto } from './dto/user.update-dto';
@@ -7,6 +7,7 @@ import { ValidationError, validate } from 'class-validator';
 import { UserService } from './user.service';
 import { UserEntity } from './user.entity';
 import { RolEntity } from '../rol/rol.entity';
+import { obtenerCarritoUsuario } from '../shared/shared.functions';
 
 
 @Controller("user")
@@ -16,7 +17,6 @@ export class UserController {
     @Post("login")
     @HttpCode(200)
     async login(
-        @Headers() headers,
         @Body() bodyParams,
         @Res() res
     ) {
@@ -33,23 +33,15 @@ export class UserController {
                 throw new BadRequestException("Wrong fields");
             } else {
                 let response = await this.userService.findOne(userLoginDto.email, userLoginDto.password);
-                console.log(response);
+                this.responderLoginJSON(response, res);
                 
-                if(response){
-                    let userData: AccountData = this.fillUserData(response)
-                    if (headers.platform === "web"){
-                        res = this.addCookies(res, userData)
-                    }
-                    res.send(userData);      
-                } else {
-                    res.send({message: "User not found"})
-                }    
             }
         } catch(error){
             console.log("Error: ", error);
             throw new BadRequestException("Validation error");
         }
     }
+
 
     @Post("sign-in")
     @HttpCode(201)
@@ -170,6 +162,36 @@ export class UserController {
         }
     }
 
+
+    @Post("/view/login")
+    @HttpCode(200)
+    async viewLogin(
+        @Body() bodyParams,
+        @Res() res,
+        @Req() req,
+    ) {
+        const productosCarrito = obtenerCarritoUsuario(req);
+        // Validator
+        const userLoginDto = new UserLoginDto();
+        // Data
+        userLoginDto.email = bodyParams.email;
+        userLoginDto.password = bodyParams.password;
+        try{
+            // Validacion
+            const errors: ValidationError[] = await validate(userLoginDto);
+            if (errors.length > 0){
+                console.log(errors);
+                throw new BadRequestException("Wrong fields");
+            } else {
+                let response = await this.userService.findOne(userLoginDto.email, userLoginDto.password);
+                this.responderLoginView(response, res, productosCarrito); 
+            }
+        } catch(error){
+            console.log("Error: ", error);
+            throw new BadRequestException("Validation error");
+        }
+    }
+
     fillUserData(response): AccountData{
         let userData: AccountData = {
             "id":  response.id,
@@ -190,7 +212,35 @@ export class UserController {
         return res;  
     }
 
+    responderLoginJSON(response, res){
+        if(response){
+            let userData: AccountData = this.fillUserData(response)
+            res.send(userData);      
+        } else {
+            res.send({message: "User not found"})
+        }    
+    }
+
+    responderLoginView(response, res, productosCarrito){
+        if(response){
+            let user: AccountData = this.fillUserData(response)
+            res.cookie("user", user);
+            return res.render(
+                "app/app-component", 
+                {
+                    pagina: "search",
+                    products: productosCarrito,
+                    user: user
+                }
+            );    
+        } else {
+            return res.render('login/login', {message: "User not found"})
+        }    
+    }
+
 }
+
+
 
 interface AccountData {
     id: number,

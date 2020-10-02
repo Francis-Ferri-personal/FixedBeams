@@ -7,8 +7,6 @@ import { BillEntity } from './bill.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { BillDetailController } from 'src/bill-detail/bill-detail.controller';
 import { BillDetailService } from 'src/bill-detail/bill-detail.service';
-import { getManager } from 'typeorm';
-import { BillDetailEntity } from '../bill-detail/bill-detail.entity';
 import { ProductService } from '../product/product.service';
 import { ProductEntity } from 'src/product/product.entity';
 import { obtenerCarritoUsuario } from 'src/shared/shared.functions';
@@ -139,7 +137,6 @@ export class BillController {
         @Body() bodyParams
     ){ 
         try {
-            //TODO: Trasacciones bien hechas
             const billAdded = await this.addBill(bodyParams);
             const idBill = billAdded.id;
             bodyParams.billDetails.forEach( async billDetail => {
@@ -161,12 +158,14 @@ export class BillController {
         @Res() res,
         @Req() req,
     ){
+        const user = req.cookies.user;
         const productosCarrito = obtenerCarritoUsuario(req);
         return res.render(
             "app/app-component", 
             {
                 pagina: "form-bill",
-                products: productosCarrito
+                products: productosCarrito,
+                user: user
             }
         );
     } 
