@@ -8,6 +8,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <div class="mr-auto"></div>
+    <div *ngIf="_serviceUser.usuario != undefined">
     <button (click)="goTo('buys')"
             id="buy"
             class="btn my-2 my-sm-0"
@@ -16,6 +17,7 @@
             aria-expanded="false">
       <img src="../../../../assets/img/btn/compra.jpg" height="50" width="50"/>
     </button>
+    </div>
     <form class="form-inline my-2 my-lg-0">
       <div class="btn-group">
         <button  class="btn my-2 my-sm-0"
