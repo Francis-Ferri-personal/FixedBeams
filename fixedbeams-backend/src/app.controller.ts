@@ -24,16 +24,16 @@ export class AppController {
       @Session() session
   ){
     // validar los datos
-    const usuario = parametrosConsulta.usuario;
+    const email = parametrosConsulta.email;
     const password = parametrosConsulta.password;
-    if(usuario == 'Adrian' && password =='1234'){
-      session.usuario = usuario
+    if(email == 'test@gmail.com' && password =='1234'){
+      session.email = email
       session.roles = ['Administrador']
       return response.redirect('account');
 
     }else {
-      if(usuario == 'Pedro' && password =='4321'){
-        session.usuario = usuario
+      if(email == 'test2@gmail.com' && password =='4321'){
+        session.email = email
         session.roles = ['Supervisor']
         return response.redirect('account');
       }else {
