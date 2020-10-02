@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, InternalServerErrorException, Post, Body, BadRequestException, ParseIntPipe, Put, Res } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, InternalServerErrorException, Post, Body, BadRequestException, ParseIntPipe, Put, Res, Req } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CategoryCreateDto } from './dto/category.create.dto';
 import { ValidationError, validate } from 'class-validator';
@@ -6,6 +6,7 @@ import { CategoryEntity } from './category.entity';
 import { DomainEntity } from 'src/domain/domain.entity';
 import { CategoryUpdateDto } from './dto/category.update.dto';
 import { ProductService } from '../product/product.service';
+import { obtenerCarritoUsuario } from '../shared/shared.functions';
 
 
 @Controller("category")
@@ -119,8 +120,10 @@ export class CategoryController {
     @Get("view/:id")
     async sendCategoryView(
         @Param() pathParams,
-        @Res() res
+        @Res() res,
+        @Req() req
     ){
+        const productosCarrito = obtenerCarritoUsuario(req);
         const id = Number(pathParams.id);
         try {
             const category: CategoryEntity = await this.categoryService.findOne(id);
@@ -133,12 +136,17 @@ export class CategoryController {
                         pagina: "product-cards",
                         categoryName: categoryName,
                         categoryProducts: categoryProducts,
+                        products: productosCarrito
                     }
                 );
             } else if (!categoryName) {
                 return res.render(
                     "app/app-component", 
-                    {pagina: "search", mensaje: "Categoria no encontrada"}
+                    {
+                        pagina: "search", 
+                        mensaje: "Categoria no encontrada", 
+                        products: productosCarrito
+                    }
                 );
             } else if (!categoryProducts) {
                 return res.render(

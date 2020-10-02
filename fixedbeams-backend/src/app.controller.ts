@@ -1,5 +1,6 @@
-import { Controller, Get, Res } from '@nestjs/common';
+import { Controller, Get, Req, Res } from '@nestjs/common';
 import { AppService } from './app.service';
+import { obtenerCarritoUsuario } from './shared/shared.functions';
 
 @Controller()
 export class AppController {
@@ -7,9 +8,13 @@ export class AppController {
 
   @Get()
   inicio(
-    @Res() res
-  ): string {
-    return res.render("app/app-component", {pagina: "search"});
-  }  
+    @Res() res,
+    @Req() req,
+  ){
+    const productosCarrito = obtenerCarritoUsuario(req);
+    return res.render("app/app-component", {pagina: "search", products: productosCarrito});
+  } 
+  
+  
     
 }

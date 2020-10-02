@@ -3,7 +3,6 @@ function disminuirCantidad(){
     if(Number(contador.innerHTML) > 0){
       contador.innerHTML = Number(contador.innerHTML) - 1;
     }
-
 }
 
 function aumentarCantidad(){
@@ -26,15 +25,57 @@ function guardarProducto(){
   window.location = `${urlBase}/product/${idProduct}/${contador}`;
 }
 
-buscarProducto(){
+
+function buscarDesdeSearch(){
+  buscarProducto("searchBox")
+}
+
+function buscarDesdeMainBar(){
+  buscarProducto("searchMainbar")
+}
+
+function buscarProducto(id){
   const urlBase = "http://localhost:3000";
-  const searchBox = document.getElementById("searchBox");
+  const searchBox = document.getElementById(id);
   if(searchBox.value === undefined || searchBox.value === ""){
     window.location = `${urlBase}`
   } else {
-    // TODO: CRear el metodo de renderizar
-    const urlBusqueda = `${urlBase}+/product/view?searchProduct=${searchBox.value}`
+    const urlBusqueda = `${urlBase}/product/view/search?searchProduct=${searchBox.value}`
     window.location = urlBusqueda;
   }
-  
+}
+
+function goToBill(){
+  const urlBase = "http://localhost:3000";
+  const urlBusqueda = `${urlBase}/bill/view/pay`
+  window.location = urlBusqueda;
+}
+
+function cleanCart(){
+  const urlBase = "http://localhost:3000";
+  const urlVaciarCarrito = `${urlBase}/product/view/borrar/carrito`
+  window.location = urlVaciarCarrito;
+}
+
+function createBill(){
+  const SelectPago = document.getElementById("exampleFormControlSelect1");
+  let total = document.getElementById("total");
+  total = Number(total.placeholder.slice(1));
+  /* const factura = {
+    "paymentType": SelectPago.value,
+    "total": total,
+    "latitude":50,
+    "longitude": 50,
+    "idUser": 1
+  }
+  fetch("http://localhost:3000/bill", {
+    method: "POST", 
+    body: JSON.parse(JSON.stringify(factura))
+  }).then(res => {
+    console.log("Request complete! response:", res);
+  }); */
+  alert("Registrando pago");
+  const urlBase = "http://localhost:3000";
+  const urlVaciarCarrito = `${urlBase}/product/view/borrar/carrito`
+  window.location = urlVaciarCarrito;
 }
