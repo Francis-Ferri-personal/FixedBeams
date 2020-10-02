@@ -32,9 +32,33 @@ export class AppController {
   }
   
   @Get('login')
-  loginn(
+  login(
       @Res() response
   ){
     return response.render('login/login')
+  }
+  @Post("login")
+  loginPost(
+      @Body() parametrosCuerpo,
+      @Res() res,
+
+  ){
+    const autenticado = this.autenticarUsuario(parametrosCuerpo);
+    if(autenticado){
+      return res.redirect("domain/categories/1");
+    } else {
+      return res.render(
+          "login/login",
+          {error: "El usuario o la contraseña no coinciden"}
+      );
+    }
+  }
+  autenticarUsuario(parametrosCuerpo): boolean{
+    const email = parametrosCuerpo.email;
+    const password = parametrosCuerpo.password;
+    if(email == "francis.ferri@epn.edu.ec" && password == "0123456789"){
+      return true;
+    }
+    return false;
   }
 }
