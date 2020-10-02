@@ -14,6 +14,6 @@ export class BillService {
     );
   }
   getOne(id: number){
-    return this._httpClient.get(this.url + '/bill/user' + id);
+    return this._httpClient.get(this.url + '/bill/user/' + id);
   }
 }
