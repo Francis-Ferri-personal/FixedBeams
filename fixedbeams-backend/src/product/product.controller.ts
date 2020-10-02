@@ -6,6 +6,7 @@ import { ProductEntity } from './product.entity';
 import { CategoryEntity } from '../category/category.entity';
 import { FactoryEntity } from 'src/factory/factory.entity';
 import { ProductUpdateDto } from './dto/product.update.dto';
+import { obtenerCarritoUsuario } from '../shared/shared.functions';
 
 
 @Controller("product")
@@ -146,8 +147,10 @@ export class ProductController {
     @Get("view/search")
     async sendProductView(
         @Query() queryParams,
-        @Res() res
+        @Res() res,
+        @Req() req
     ){
+        const productosCarrito = obtenerCarritoUsuario(req);
         const searchProduct = queryParams.searchProduct;  
         if(searchProduct){
             try {
@@ -158,13 +161,18 @@ export class ProductController {
                         {
                             pagina: "product-cards",
                             categoryName: searchProduct,
-                            categoryProducts: searchProducts.slice(0,4)
+                            categoryProducts: searchProducts.slice(0,4),
+                            products: productosCarrito
                         }
                     );
                 } else {
                     return res.render(
                         "app/app-component", 
-                        {pagina: "search", mensaje: "No se encontraron productos"}
+                        {
+                            pagina: "search", 
+                            mensaje: "No se encontraron productos",
+                            products: productosCarrito
+                        }
                     );
                 }
             } catch (error) {
@@ -196,12 +204,21 @@ export class ProductController {
                 }
                 return res.render(
                     "app/app-component", 
-                    {pagina: "product", product: product, cantidad: cantidad}
+                    {
+                        pagina: "product", 
+                        product: product, 
+                        cantidad: cantidad,
+                        products: productosCarrito
+                    }
                 );
             } else {
                 return res.render(
                     "app/app-component", 
-                    {pagina: "search", mensaje: "Producto no encontrado"}
+                    {
+                        pagina: "search", 
+                        mensaje: "Producto no encontrado",
+                        products: productosCarrito
+                    }
                 );
             }
         } catch (error) {
@@ -221,30 +238,47 @@ export class ProductController {
         if(!productosCarrito){
             productosCarrito = [];    
         }
-
-        console.log(productosCarrito);
-
         const id = Number(pathParams.id);
         const cantidad = Number(pathParams.cantidad);
         if(id == NaN || cantidad === NaN){
             return res.render(
                 "app/app-component", 
-                {pagina: "search", mensaje: "Error en guardar producto"}
+                {
+                    pagina: "search", 
+                    mensaje: "Error en guardar producto",
+                    products: productosCarrito
+                }
             );
         }
         try {
-            const product = await this.productService.findOne(id);
+            const product: ProductEntity = await this.productService.findOne(id);
             if (product){
-                const productoAgregado = {id: id, quantity: cantidad };
+                const productoAgregado = {
+                    id: id,
+                    name: product.name,
+                    price: product.price,
+                    srcImage: product.srcImage,
+                    quantity: cantidad 
+                };
                 productosCarrito = this.guardarProducto(productoAgregado, productosCarrito);
                 res.cookie(
                     "carrito", productosCarrito
                 );
-                return res.render("app/app-component", {pagina: "search"});
+                return res.render(
+                    "app/app-component", 
+                    {
+                        pagina: "search", 
+                        products: productosCarrito
+                    }
+                );
             } else {
                 return res.render(
                     "app/app-component", 
-                    {pagina: "search", mensaje: "Error producto no existe"}
+                    {
+                        pagina: "search", 
+                        mensaje: "Error producto no existe",
+                        products: productosCarrito
+                    }
                 );
             }
 
